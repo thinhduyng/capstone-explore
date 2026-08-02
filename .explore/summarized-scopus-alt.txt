@@ -1,0 +1,467 @@
+SCOPUS ALTERNATIVE DOMAIN RANKING AND RECOMMENDED PAPER SHORTLIST
+================================================================
+
+Source:
+explore/scopus_export_Jul 29-2026_a5c356bb-661e-4866-89f2-c503919a3c8e.csv
+
+Prepared: 2026-07-29
+
+PURPOSE
+-------
+This is the alternative to summarized-scopus.txt. It answers the follow-up question:
+which domains are reasonably common in the supplied Scopus export, but are less
+saturated than healthcare or education and still executable by a computer-science
+capstone team?
+
+IMPORTANT SOURCE NOTE
+---------------------
+Every numbered paper in this file appears in the supplied Scopus CSV. Internet
+search was used only to verify official code repositories, datasets, project pages,
+replication packages, and paper links. No externally discovered paper was added to
+the numbered shortlist.
+
+The counts below use the same approximate, multi-label title-and-author-keyword
+method as summarized-scopus.txt. They should be interpreted as indicators of topic
+presence, not as mutually exclusive bibliometric categories.
+
+Artifact labels:
+[A] Strong executable baseline: verified public code and useful data/evaluation assets.
+[B] Runnable prototype: verified public implementation, but reproduction may require
+    extra setup, an API, or team-created evaluation data.
+[C] Read/method baseline: useful design, but no complete executable artifact verified.
+
+Always check repository, model, and dataset licenses before redistribution.
+
+
+PART 1: FIVE LESS-SATURATED BUT VIABLE DOMAINS
+==============================================
+
+Rank  Domain                                  Approx. papers  Prevalence  Feasibility
+----  --------------------------------------  --------------  ----------  -----------
+1     Cybersecurity and privacy              353             4.4%        5/5
+2     Law, policy and government             340             4.2%        4/5
+3     Manufacturing and industrial systems   295             3.7%        3/5
+4     Environment, energy and agriculture    213             2.7%        4/5
+5     Software engineering and code          171             2.1%        5/5
+
+Interpretation
+--------------
+
+1. Cybersecurity and privacy
+   Common enough to contain mature baselines, but much smaller than healthcare.
+   Secure RAG is especially feasible because public attacks, defenses, QA datasets,
+   and objective metrics already exist. The team must test only systems and corpora
+   it owns or is authorized to evaluate.
+
+2. Law, policy and government
+   Public, naturally hierarchical documents make retrieval and citation evaluation
+   practical. A bounded Vietnamese legal subdomain adds local value. The main risks
+   are document versioning and the need for expert review, not model training cost.
+
+3. Manufacturing and industrial systems
+   Large enough to be credible, but many papers depend on private sensor logs,
+   factory equipment, digital twins, or domain-specific hardware. Select it only if
+   the team has an industry partner or an unusually strong public benchmark.
+
+4. Environment, energy and agriculture
+   Attractive for local impact and public data, but the category is fragmented
+   across forecasting, remote sensing, IoT, optimization, and document QA. It is
+   feasible if the team first secures one clean public dataset and a narrow task.
+
+5. Software engineering and code
+   The smallest of these five, but the best "less common, highly executable" option.
+   GitHub repositories are natural public corpora, tests provide automatic ground
+   truth, and the Scopus export contains runnable code-RAG benchmarks. The novelty
+   should be repository structure, task-aware retrieval, multilingual requirements,
+   efficiency, or security—not simply another chatbot over source code.
+
+Final alternative recommendations
+---------------------------------
+
+1. Citation- and time-grounded Vietnamese legal RAG.
+2. Repository-grounded software-engineering intelligence.
+3. Secure RAG with cross-dataset or Vietnamese generalization.
+
+Why education was replaced:
+Educational RAG remains very feasible, but a strong thesis often needs a student
+study, instructors, consent, and learning-outcome evaluation. Software engineering
+offers equally strong implementation feasibility with more automatic, reproducible
+metrics and less human-subject coordination.
+
+
+PART 2: REPOSITORY-GROUNDED SOFTWARE-ENGINEERING INTELLIGENCE
+============================================================
+
+Recommended thesis shape
+------------------------
+Do not attempt to build a general coding assistant. Choose one measurable task:
+
+- repository-level code completion;
+- Java unit-test generation;
+- requirement-to-requirement or requirement-to-code trace recovery; or
+- repository/class/function summarization.
+
+Best capstone choice:
+"Structure- and test-aware retrieval for repository-level unit-test generation."
+Start with CodeRAG-Bench for retrieval methodology and PAGTest/RefTest for the
+working task baseline. Compare flat vector retrieval against repository structure,
+dependencies, and existing-test relationships.
+
+1. [A, benchmark foundation] CODERAG-BENCH: Can Retrieval Augment Code
+   Generation?
+
+   Venue/year: Findings of NAACL, 2025
+   DOI: https://doi.org/10.18653/v1/2025.findings-naacl.176
+   Project: https://code-rag-bench.github.io/
+   Code: https://github.com/code-rag-bench/code-rag-bench
+   Scopus "Cited by" value in export: 16
+
+   Why read and run:
+   - Covers basic, open-domain, and repository-level code-generation tasks.
+   - Includes heterogeneous retrieval sources: solutions, tutorials, library
+     documentation, Stack Overflow, and GitHub repositories.
+   - Provides unified preprocessing, sparse/dense retrieval, generation, and
+     execution-based evaluation code.
+   - Separates retrieval quality from final functional correctness, which is
+     essential for diagnosing whether retrieval actually helps.
+
+   What to reproduce:
+   - BM25 and one dense retriever on a small benchmark subset.
+   - Retrieval Recall/nDCG and end-to-end pass@k.
+   - No-retrieval, retrieved-context, and oracle/gold-context conditions.
+
+2. [A/B, task baseline] Reference-Based Retrieval-Augmented Unit Test
+   Generation
+
+   Tool: RefTest / public repository name PAGTest
+   Venue/year: ACM Transactions on Software Engineering and Methodology, 2026
+   DOI: https://doi.org/10.1145/3765758
+   Code: https://github.com/PAGTest-project/PAGTest
+
+   Why it is highly executable:
+   - Public Python prototype for Java repositories.
+   - Parses repository structure and retrieves existing tests as reusable knowledge.
+   - Models Given-When-Then references, inheritance, interfaces, and dependencies.
+   - Evaluated in the paper on 12 open-source projects and 1,515 methods.
+   - Unit tests offer objective outcomes: compilation, pass rate, coverage, mutation
+     score, and maintainability.
+
+   Reproduction warning:
+   The repository is new and uses an external LLM-compatible API. Treat it as a
+   research prototype: first prove it works on one small Java project, then scale.
+
+   Feasible extension:
+   Compare semantic similarity against task-aware reference retrieval, or add a
+   lightweight reranker using AST, call-graph, and test-history features.
+
+3. [A] StructuralCoder: Repository Structure Based RAG for Repository-Level
+   Code Completion
+
+   Venue/year: PRICAI, indexed as 2026
+   DOI: https://doi.org/10.1007/978-981-95-7078-2_43
+   Code: https://github.com/Kagam11/StructuralCoder
+
+   Why use:
+   - Replaces purely similarity-based retrieval with repository-wide structural
+     context.
+   - Builds a hybrid directory-tree and abstract-syntax-tree representation.
+   - Requires no generator-model training.
+   - Evaluates on CrossCodeEval, giving the team a standard completion benchmark.
+
+   Thesis extension:
+   Ablate directory, AST, imports, call graph, and semantic similarity signals.
+   Report both completion accuracy and context-token/latency cost.
+
+4. [A] Requirements Traceability Link Recovery via Retrieval-Augmented
+   Generation
+
+   Venue/year: REFSQ, 2025
+   DOI: https://doi.org/10.1007/978-3-031-88531-0_27
+   Project and artifact links: https://ardoco.de/c/refsq25
+   Replication package: https://doi.org/10.5281/zenodo.14779458
+   Scopus "Cited by" value in export: 9
+
+   Why use:
+   - Evaluates RAG for recovering links between software requirements.
+   - Uses six benchmark datasets rather than one private project.
+   - Reports that open-source models can be competitive with proprietary models.
+   - A formal replication package is available, reducing setup and ambiguity.
+
+   Feasible extension:
+   Study cross-project generalization, Vietnamese-English requirements, or
+   requirement-to-code links using hybrid lexical, semantic, and structural signals.
+
+5. [A] Code Summarization Beyond Function Level
+
+   Venue/year: IEEE/ACM LLM4Code workshop at ICSE, 2025
+   DOI: https://doi.org/10.1109/LLM4Code66737.2025.00024
+   Code, data, and results:
+   https://github.com/kilimanj4r0/code-summarization-beyond-function-level
+   Scopus "Cited by" value in export: 7
+
+   Why use:
+   - Directly compares function-, class-, and repository-level context.
+   - Includes fine-tuned and in-context baselines plus RAG experiments.
+   - Publishes code, datasets, and recorded results.
+   - Can be attempted with smaller code models before expensive API models.
+
+   Caution:
+   Text-overlap metrics alone do not prove usefulness. Add factual consistency,
+   identifier/dependency coverage, and a small blinded developer evaluation.
+
+6. [B, cross-cutting security paper] ImportSnare: Directed "Code Manual"
+   Hijacking in Retrieval-Augmented Code Generation
+
+   Venue/year: ACM CCS, 2025
+   DOI: https://doi.org/10.1145/3719027.3765161
+   Project: https://importsnare.github.io/
+   Scopus "Cited by" value in export: 1
+
+   Why read:
+   - Shows that retrieved documentation can cause code generators to recommend
+     malicious dependencies.
+   - Studies Python, Rust, and JavaScript and directly connects code RAG to software
+     supply-chain security.
+   - Provides a concrete adversarial test for a repository assistant.
+
+   Safe extension:
+   Use synthetic, non-published package names in a private sandbox. Test provenance
+   display, dependency allowlists, trusted-source weighting, and suspicious-package
+   filtering. Do not upload deceptive packages or attack public services.
+
+Minimum defensible software-engineering experiment
+--------------------------------------------------
+- Select one task and 3-10 open-source repositories in one language.
+- Freeze repository commits and prevent test-set or future-code leakage.
+- Baselines: no retrieval; BM25; dense retrieval; hybrid retrieval.
+- Proposed method: one structure- or task-aware retrieval/reranking contribution.
+- Retrieval metrics: Recall@k, MRR/nDCG, and relevant-context token cost.
+- Task metrics:
+  * code completion: exact match, edit similarity, pass@k;
+  * unit tests: compilation, pass rate, coverage, mutation score;
+  * trace recovery: precision, recall, F1, MAP;
+  * summarization: automatic metrics plus factual/developer judgment.
+- Report latency, token use, model/API cost, and at least one smaller open model.
+- Run ablations showing which repository signals actually contribute.
+
+
+PART 3: CITATION- AND TIME-GROUNDED VIETNAMESE LEGAL RAG
+========================================================
+
+Recommended thesis shape
+------------------------
+Choose one bounded legal area—tax, labor, education, or administrative procedures.
+Store article/clause hierarchy, source URL, issue date, effective date, amendment
+status, and superseded versions. Evaluate exact source and temporal correctness
+separately from fluent answer quality.
+
+1. [A, end-to-end baseline] LexRAG: Benchmarking Retrieval-Augmented
+   Generation in Multi-Turn Legal Consultation Conversation
+
+   Venue/year: ACM SIGIR, 2025
+   DOI: https://doi.org/10.1145/3726302.3730340
+   Code/data/toolkit: https://github.com/CSHaitao/LexRAG
+   Scopus "Cited by" value in export: 9
+
+   Why use:
+   - 1,013 five-turn legal conversations and 17,228 statutory provisions.
+   - Modular query rewriting, retrieval, generation, and evaluation pipeline.
+   - Retrieval metrics plus response-generation and judge-based evaluation.
+
+2. [A, citation baseline] Legal Citation Prediction with LLMs: A Comparative
+   Evaluation of Instruction Tuning, Retrieval, and Jurisdiction-Specific
+   Pre-training on the AusLaw Citation Benchmark
+
+   Venue/year: Artificial Intelligence and Law, 2026
+   DOI: https://doi.org/10.1007/s10506-026-09506-9
+   Project: https://auslawbench.github.io/
+   Data: https://huggingface.co/datasets/auslawbench/AusLaw-Citation-Benchmark
+   Models: https://huggingface.co/auslawbench
+
+   Why use:
+   - 55k citation examples with models and notebook code.
+   - Compares prompting, retrieval, fine-tuning, and reranking.
+   - Strong template for exact Vietnamese statute/article prediction.
+
+3. [A] HCLeK: Hierarchical Compression of Legal Knowledge for
+   Retrieval-Augmented Generation
+
+   Venue/year: ACM CIKM, 2025
+   DOI: https://doi.org/10.1145/3746252.3760925
+   Code: https://github.com/fupanY/HCLeK
+
+   Why use:
+   - Designed for long, hierarchical legal documents.
+   - Natural match for part/chapter/section/article/clause structure.
+   - Provides a principled comparison to flat fixed-size chunking.
+
+4. [A/B] PAKTON: A Multi-Agent Framework for Question Answering in Long
+   Legal Agreements
+
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.403
+   Code/system/evaluation: https://github.com/petrosrapto/PAKTON
+
+   Why use:
+   - Open-source contract analysis and on-premise deployment.
+   - Includes retrieval, classification, qualitative and human evaluation.
+   - Relevant if the team chooses contracts instead of statutes.
+
+5. [A] ScenarioBench: Trace-Grounded Compliance Evaluation for Text-to-SQL
+   and RAG
+
+   Venue/year: CASCON, 2025
+   DOI: https://doi.org/10.1109/CASCON66301.2025.00111
+   Artifact:
+   https://github.com/ShabnamAtf/ScenarioBench/releases/tag/v0.1.0
+
+   Why use:
+   - Requires decisions to cite clause IDs from a controlled policy canon.
+   - Evaluates trace correctness/completeness, retrieval, hallucination, and latency.
+   - Useful pattern for audit-ready Vietnamese legal evaluation.
+
+6. [A, dataset model] BR-TaxQA-R: A Dataset for Question Answering with
+   References for Brazilian Personal Income Tax Law, Including Case Law
+
+   Venue/year: indexed as 2026
+   DOI: https://doi.org/10.1007/978-3-032-15987-8_14
+   Dataset: https://huggingface.co/datasets/unicamp-dl/BR-TaxQA-R
+
+   Why use:
+   - 715 official tax questions enriched with statutes and case law.
+   - Demonstrates a manageable schema for QA with explicit references.
+   - Good construction template for one Vietnamese legal subdomain.
+
+Minimum defensible legal experiment
+-----------------------------------
+- At least 100 expert-reviewed questions in one bounded subdomain.
+- BM25, dense, hybrid, and hybrid-plus-reranker retrieval baselines.
+- Retrieval-only, naive RAG, and citation-constrained RAG variants.
+- Recall@5/10, MRR/nDCG, exact-article match, citation precision/entailment,
+  answer correctness, temporal correctness, latency, and cost.
+- Include questions whose correct answer changes across document versions.
+- Present the result as research assistance, not legal advice.
+
+
+PART 4: SECURE RAG WITH CROSS-DATASET OR VIETNAMESE GENERALIZATION
+=================================================================
+
+Recommended thesis shape
+------------------------
+Use PoisonedRAG as the attack baseline and RAGDefender as the primary defense.
+The contribution should be a multilingual, cross-dataset, adaptive-attack, or
+cost/utility study—not another defense evaluated only on its own tuning setup.
+
+1. [A, attack baseline] PoisonedRAG: Knowledge Corruption Attacks to
+   Retrieval-Augmented Generation of Large Language Models
+
+   Venue/year: USENIX Security, 2025
+   Paper: https://arxiv.org/abs/2402.07867
+   Code: https://github.com/sleeepeer/PoisonedRAG
+   Scopus "Cited by" value in export: 49
+
+   Why use:
+   - Canonical knowledge-base poisoning threat model.
+   - Public attack and evaluation implementation.
+   - Standard QA datasets and measurable attack success rate.
+
+2. [A, recommended defense] Rescuing the Unpoisoned: Efficient Defense
+   Against Knowledge Corruption Attacks on RAG Systems
+
+   Method: RAGDefender
+   Venue/year: ACSAC, 2025
+   DOI: https://doi.org/10.1109/ACSAC67867.2025.00093
+   Code/artifacts: https://github.com/SecAI-Lab/RAGDefender
+   Package: https://pypi.org/project/ragdefender/
+
+   Why use:
+   - Training-free filtering after retrieval.
+   - Includes poisoned corpora, scripts, and expected outputs.
+   - Suitable for ablation and multilingual feature extensions.
+
+3. [A] AttnTrace: Contextual Attribution of Prompt Injection and Knowledge
+   Corruption
+
+   Venue/year: IEEE Symposium on Security and Privacy, 2026
+   DOI: https://doi.org/10.1109/SP63933.2026.00198
+   Code/data/notebook: https://github.com/Wang-Yanting/AttnTrace
+
+   Why use:
+   - Locates influential malicious spans before attack classification.
+   - Covers both indirect prompt injection and knowledge corruption.
+   - Useful if the team studies explanation or incident investigation.
+
+4. [A] Traceback of Poisoning Attacks to Retrieval-Augmented Generation
+
+   Method: RAGForensics
+   Venue/year: ACM Web Conference, 2025
+   DOI: https://doi.org/10.1145/3696410.3714756
+   Code: https://github.com/zhangbl6618/RAG-Responsibility-Attribution
+   Scopus "Cited by" value in export: 12
+
+   Why use:
+   - Attributes bad outputs to stored passages.
+   - Useful for provenance, cleanup, and post-incident investigation.
+
+5. [A] Mitigating the Privacy Issues in Retrieval-Augmented Generation
+   via Pure Synthetic Data
+
+   Method: RAG-SAGE
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.1247
+   Code: https://github.com/phycholosogy/RAG-SAGE
+   Scopus "Cited by" value in export: 8
+
+   Why use:
+   - Adds privacy leakage as a second security axis.
+   - Public implementation enables comparison of source-document and synthetic-data
+     alternatives.
+
+6. [A] Beyond Text: Unveiling Privacy Vulnerabilities in Multi-modal
+   Retrieval-Augmented Generation
+
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.1259
+   Code: https://github.com/phycholosogy/MRAG-privacy
+
+   Why use:
+   - Extends leakage testing to retrieved images and multimodal documents.
+   - Relevant if the team's corpus includes scans, slides, or PDF screenshots.
+
+Minimum defensible security experiment
+--------------------------------------
+- Explicit attacker access and capability assumptions.
+- No defense, simple similarity/perplexity filter, RAGDefender, and one proposed
+  multilingual or hybrid method.
+- Two public English QA datasets plus a bounded Vietnamese collection.
+- Attack success rate, clean accuracy, poison retrieval rate, detector
+  precision/recall/F1, false-positive rate, latency, and cost.
+- Adaptive/paraphrased attacks not seen during tuning.
+- Experiments only on team-owned or explicitly authorized systems and corpora.
+
+
+PART 5: FINAL CHOICE GUIDE
+==========================
+
+Choose repository-grounded software engineering if:
+- the team wants the lowest dependency on external experts;
+- automatic evaluation and reproducible open-source corpora are priorities; and
+- members are comfortable with ASTs, testing, program analysis, or developer tools.
+
+Choose Vietnamese legal RAG if:
+- local relevance and a distinctive dataset contribution matter most;
+- the team can obtain legal-expert review; and
+- document versioning and citation correctness are treated as core research tasks.
+
+Choose secure RAG if:
+- the team prefers adversarial experiments and rigorous quantitative evaluation;
+- it can work safely in controlled sandboxes; and
+- it is willing to reproduce both attacks and defenses before proposing a method.
+
+Overall recommendation:
+Repository-grounded software engineering is the best alternative "common enough but
+not saturated" domain. The most manageable thesis is task-aware retrieval for Java
+unit-test generation, evaluated on frozen open-source repositories. Vietnamese legal
+RAG is more locally distinctive but needs expert annotation. Secure RAG has the
+strongest mature baselines but requires careful threat modeling and safe execution.
+

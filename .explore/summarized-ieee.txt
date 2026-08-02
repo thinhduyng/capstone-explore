@@ -1,0 +1,389 @@
+IEEE XPLORE DOMAIN RANKING AND RECOMMENDED PAPER SHORTLIST
+=========================================================
+
+Source directory:
+explore/IEEEXplore/
+
+Prepared: 2026-07-29
+
+EXPORT AND DEDUPLICATION NOTE
+-----------------------------
+The three CSV files are different rankings of substantially overlapping search
+results. They must not be treated as three independent samples.
+
+- export2026.07.29-04.06.29.csv:
+  patent-citation view. Every Patent Citation Count in the export is empty, so the
+  view effectively falls back to title order.
+- export2026.07.29-04.09.57.csv:
+  paper-citation view. Article Citation Count is perfectly non-increasing, beginning
+  at 139 citations.
+- export2026.07.29-04.16.29.csv:
+  popularity/relevance view. The ranking is neither title- nor citation-ordered, and
+  IEEE does not include the popularity score in the exported CSV.
+
+Overlap:
+- 3,000 exported rows.
+- 1,848 unique papers after DOI/title deduplication.
+- 187 papers occur in all three exports.
+- Paper-citation and popularity views overlap by 626 papers.
+- Patent/title and paper-citation views overlap by 426 papers.
+- Patent/title and popularity views overlap by 287 papers.
+
+Every numbered paper below appears in at least one supplied IEEE export. Internet
+search was used only to verify public artifacts and paper pages.
+
+Artifact labels:
+[A] Verified public code/data or a strong executable artifact.
+[B] Partial artifact, dataset, demo, or easily runnable component.
+[C] Read/method baseline; no complete official repository verified.
+
+
+PART 1: TOP 10 DOMAINS IN THE DEDUPLICATED IEEE UNION
+=====================================================
+
+Method:
+The same harmonized title-and-keyword taxonomy used in explore-domains.md was applied
+to Document Title, Author Keywords, and IEEE Terms. Counts are approximate and
+multi-label.
+
+Rank  Domain                                      Papers  Share
+----  ------------------------------------------  ------  ------
+1     Business, management and finance              402   21.8%
+2     Healthcare and biomedicine                    295   16.0%
+3     Social science, media and communication       289   15.6%
+4     Cybersecurity, privacy and safety              265   14.3%
+5     Software engineering and programming           223   12.1%
+6     Education and learning                         207   11.2%
+7     Engineering, manufacturing and industrial      175    9.5%
+8     Law, policy and government                     158    8.5%
+9     Energy and power systems                        92    5.0%
+10    Environment, climate and sustainability         83    4.5%
+
+Immediately below the top ten:
+- Transport, mobility and maritime: 80 papers (4.3%).
+- Agriculture and food: 32 papers (1.7%).
+
+Ranking-view sensitivity
+------------------------
+The ordering changes slightly by export:
+
+- The citation-ranked view favors established surveys, education, cybersecurity,
+  software engineering, and applied systems.
+- The popularity view increases software engineering and cybersecurity.
+- The patent view contributes no patent-impact evidence because every exported
+  patent-citation value is empty.
+
+The deduplicated union is preferable to any single ranking, but it is still a
+rank-biased sample rather than a random sample of every IEEE result.
+
+Domain selection
+----------------
+
+Not selected:
+- Healthcare: frequent but requires clinical validation and stronger safety controls.
+- Business: broad and often dependent on private enterprise/customer data.
+- Social/media: common, but many topics need user studies or platform data.
+- Industrial engineering: viable, but ScienceDirect already supplies a stronger
+  executable industrial shortlist.
+
+Selected:
+1. Secure and privacy-aware RAG.
+2. Repository-grounded software-engineering automation.
+3. Grounded educational/programming assistants.
+
+
+PART 2: SECURE AND PRIVACY-AWARE RAG
+====================================
+
+Recommended thesis shape
+------------------------
+Use one controlled RAG corpus and evaluate privacy, poisoning, or indirect prompt
+injection. The most manageable extension is cross-dataset detection or provenance,
+not inventing a completely new attack. Run experiments only against team-owned or
+explicitly authorized systems.
+
+1. [A] AttnTrace: Contextual Attribution of Prompt Injection and Knowledge
+   Corruption
+
+   Venue/year: IEEE Symposium on Security and Privacy, 2026
+   DOI: https://doi.org/10.1109/SP63933.2026.00198
+   Code/data: https://github.com/Wang-Yanting/AttnTrace
+
+   Why use:
+   - Attributes malicious outputs to responsible context spans.
+   - Covers indirect prompt injection and poisoned knowledge.
+   - Includes code, data, and an executable notebook.
+
+2. [A] DrainCode: Stealthy Energy Consumption Attacks on
+   Retrieval-Augmented Code Generation via Context Poisoning
+
+   Venue/year: IEEE/ACM ASE, 2025
+   DOI: https://doi.org/10.1109/ASE63991.2025.00070
+   Code: https://github.com/DeepSoftwareAnalytics/DrainCode
+
+   Why use:
+   - Connects RAG poisoning to code generation and energy/resource consumption.
+   - Provides a useful bridge between the security and software recommendations.
+   - Supports measurable attack success, code behavior, latency, and resource cost.
+
+3. [A] DarkCite: Unveiling Authority Bias as Implicit RAG Jailbreak Attacks
+
+   Venue/year: IEEE ICASSP, 2026
+   DOI: https://doi.org/10.1109/ICASSP55912.2026.11463457
+   Code: https://github.com/YancyKahn/DarkCite
+
+   Why use:
+   - Studies authority/citation cues as an implicit jailbreak mechanism.
+   - Appropriate for a thesis on evidence provenance and citation trust.
+   - Can be tested safely with synthetic documents in a private corpus.
+
+4. [C, privacy baseline] Generating Is Believing: Membership Inference
+   Attacks against Retrieval-Augmented Generation
+
+   Method: S2MIA
+   Venue/year: IEEE ICASSP, 2025
+   DOI: https://doi.org/10.1109/ICASSP49660.2025.10889013
+   Paper: https://arxiv.org/abs/2406.19234
+   IEEE paper citations in export: 12
+
+   Why read:
+   - Tests whether an attacker can infer if a document belongs to a RAG corpus.
+   - Focuses on database privacy rather than only generator privacy.
+   - Gives a different security axis from corpus poisoning.
+
+5. [C] Securing RAG: A Risk Assessment and Mitigation Framework
+
+   Venue/year: IEEE SDS, 2025
+   DOI: https://doi.org/10.1109/SDS66131.2025.00024
+   IEEE paper citations in export: 10
+
+   Why read:
+   - Useful for defining threat actors, system assets, failure points, and controls.
+   - Helps prevent an experiment from mixing incompatible attack assumptions.
+
+6. [C, evaluation baseline] RAGProbe: Breaking RAG Pipelines with Evaluation
+   Scenarios
+
+   Venue/year: IEEE/ACM CAIN, 2025
+   DOI: https://doi.org/10.1109/CAIN66642.2025.00015
+
+   Why use:
+   - Treats adversarial evaluation as a software-quality problem.
+   - Generates failure-triggering evaluation scenarios for RAG pipelines.
+   - Suitable for regression testing in a CI/CD workflow.
+
+Minimum defensible security experiment
+--------------------------------------
+- Explicit attacker knowledge and corpus access assumptions.
+- At least two attacks or attack variants.
+- No-defense, simple-filter, and one released defense/attribution baseline.
+- Two public QA datasets plus one small Vietnamese or code corpus.
+- Attack success, clean accuracy, poison retrieval, detector precision/recall/F1,
+  false positives, latency, token cost, and resource/energy cost where applicable.
+- Adaptive or paraphrased attacks held out from tuning.
+
+
+PART 3: REPOSITORY-GROUNDED SOFTWARE-ENGINEERING AUTOMATION
+===========================================================
+
+Recommended thesis shape
+------------------------
+Choose one automatically verifiable task: repository summarization, requirements,
+commit messages, secure code generation, or test generation. A strong capstone
+compares flat semantic retrieval with AST/dependency/task-aware retrieval.
+
+1. [A] Code Summarization Beyond Function Level
+
+   Venue/year: IEEE/ACM LLM4Code, 2025
+   DOI: https://doi.org/10.1109/LLM4Code66737.2025.00024
+   Code/data/results:
+   https://github.com/kilimanj4r0/code-summarization-beyond-function-level
+   IEEE paper citations in export: 13
+
+   Why use:
+   - Compares function, class, and repository context.
+   - Releases code, datasets, and evaluation outputs.
+   - Includes RAG and smaller code-model baselines.
+
+2. [A] Accelerating Requirements Specification Using Large Language Models
+   and Retrieval Augmented Generation – A Case Study
+
+   Venue/year: IEEE MELECON, 2026
+   DOI: https://doi.org/10.1109/MELECON64486.2026.11418833
+   Code: https://github.com/frickly-systems/reqrag
+
+   Why use:
+   - Provides a direct requirements-engineering RAG implementation.
+   - Appropriate for testing traceability, completeness, and project terminology.
+
+3. [A] MCCoder: Streamlining Motion Control with LLM-Assisted Code
+   Generation and Rigorous Verification
+
+   Venue/year: IEEE CASE, 2025
+   DOI: https://doi.org/10.1109/CASE58245.2025.11163835
+   Code: https://github.com/MCCodeAI/MCCoder
+
+   Why use:
+   - Couples generation with explicit verification.
+   - Demonstrates why execution/validation matters more than textual similarity.
+   - Use its architecture on a safe simulator rather than physical motion hardware.
+
+4. [A] SAGE-HLS: Syntax-Aware AST-Guided LLM for High-Level Synthesis Code
+   Generation
+
+   Venue/year: IEEE ICCD, 2025
+   DOI: https://doi.org/10.1109/ICCD65941.2025.00088
+   Code: https://github.com/zfsadik/SAGEHLS
+
+   Why use:
+   - Incorporates syntax/AST structure into code generation.
+   - Provides a strong structure-aware comparison to plain vector retrieval.
+
+5. [C] Enhancing Commit Message Generation in Software Repositories:
+   A RAG-Based Approach
+
+   Venue/year: IEEE SERA, 2025
+   DOI: https://doi.org/10.1109/SERA65747.2025.11154546
+
+   Why use:
+   - Simple task with naturally available public Git histories.
+   - Can compare repository-local versus cross-repository retrieval.
+   - Evaluation should include factual correctness and usefulness, not BLEU alone.
+
+6. [C] Retrieval-Augmented Generation for Software Requirement-Based Test
+   Case Generation
+
+   Venue/year: IEEE QRS, 2025
+   DOI: https://doi.org/10.1109/QRS65678.2025.00022
+
+   Why use:
+   - Connects requirements, retrieval, and executable tests.
+   - Provides a natural extension using traceability-aware context selection.
+
+Minimum defensible software experiment
+--------------------------------------
+- Freeze repository commits and prevent temporal/test leakage.
+- Baselines: no retrieval, BM25, dense, hybrid.
+- Proposed method: AST/dependency/test/requirement-aware retrieval or reranking.
+- Retrieval metrics: Recall@k, MRR/nDCG, context tokens.
+- Task metrics: compilation, tests passed, pass@k, coverage/mutation score, exact
+  trace recovery, or factual summary quality.
+- Report latency, token/API cost, and one small open model.
+
+
+PART 4: GROUNDED EDUCATIONAL AND PROGRAMMING ASSISTANTS
+=======================================================
+
+Recommended thesis shape
+------------------------
+Use one HCMUS course with public or instructor-authorized materials. Separate
+retrieval correctness from answer quality and learning outcomes. If a full student
+study is infeasible, evaluate retrieval, factuality, hint quality, and instructor
+judgment without claiming improved learning.
+
+1. [C, essential empirical baseline] An LLM-Driven Chatbot in Higher
+   Education for Databases and Information Systems
+
+   System: MoodleBot
+   Venue/year: IEEE Transactions on Education, 2025
+   DOI: https://doi.org/10.1109/TE.2024.3467912
+   IEEE paper citations in export: 139
+   Popularity-view rank: 1
+
+   Why read:
+   - Most cited and most popular paper across the supplied IEEE views.
+   - Deploys a course-grounded RAG chatbot in a real computer-science classroom.
+   - Evaluates answer accuracy and student technology acceptance.
+   - Provides a realistic study-design baseline, even without a verified repository.
+
+2. [A/B] KAG: A Scalable Knowledge-Augmented Generation System for
+   Educational Content Management
+
+   Venue/year: IEEE FLLM, 2025
+   DOI: https://doi.org/10.1109/FLLM67465.2025.11391105
+   Code/resources: https://github.com/Hadi-Hsn/KAG
+
+   Why use:
+   - Public implementation for educational knowledge ingestion and retrieval.
+   - Focuses on scalable content management and source-grounded answers.
+
+3. [B, bilingual dataset] Adaptive Chunking for VideoRAG Pipelines with a
+   Newly Gathered Bilingual Educational Dataset
+
+   Venue/year: IEEE CSICC, 2025
+   DOI: https://doi.org/10.1109/CSICC65765.2025.10967455
+   Dataset: https://huggingface.co/datasets/uIAICIEduViQA
+
+   Why use:
+   - Supplies a concrete bilingual educational VideoRAG dataset.
+   - Useful for testing adaptive versus fixed chunking.
+   - Demonstrates that Hugging Face is valuable as an artifact source even when its
+     paper search returns few results.
+
+4. [A/B] Multimodal AI for Romanian University Support: An LLM, RAG and
+   Voice Approach
+
+   Venue/year: IEEE SACI, 2025
+   DOI: https://doi.org/10.1109/SACI66288.2025.11030141
+   Code: https://github.com/Andrei481/RomanianChatbot
+
+   Why use:
+   - Released multilingual university-support implementation.
+   - A useful localization baseline for Vietnamese institutional information.
+
+5. [C] Optimizing RAG in Programming Education: A Comparative Study of
+   Models and Strategies
+
+   Venue/year: IEEE Access, 2025
+   DOI: https://doi.org/10.1109/ACCESS.2025.3629843
+   Popularity-view rank: 71
+
+   Why use:
+   - Directly addresses programming education.
+   - Useful experimental comparison for models, retrieval, and prompt strategies.
+
+6. [C] How to Build an Adaptive AI Tutor for Any Course Using Knowledge
+   Graph-Enhanced Retrieval-Augmented Generation
+
+   Venue/year: IEEE ICEIT, 2025
+   DOI: https://doi.org/10.1109/ICEIT64364.2025.10975937
+   IEEE paper citations in export: 15
+
+   Why use:
+   - Adds course knowledge graphs and adaptive tutoring to standard RAG.
+   - Useful architecture reference, but a team should first prove a simpler RAG
+     baseline and define measurable pedagogy.
+
+Minimum defensible educational experiment
+-----------------------------------------
+- One course and a versioned, authorized corpus.
+- BM25, dense, hybrid, and reranked retrieval.
+- Fixed, semantic, and curriculum/section-aware chunking.
+- Recall@k/MRR, citation correctness, factuality, hint correctness, unsupported
+  claims, latency, and cost.
+- Instructor-reviewed questions and answers.
+- If conducting a student study: consent, predefined outcomes, comparison condition,
+  and sufficient sample size.
+
+
+PART 5: FINAL IEEE DECISION
+===========================
+
+Best execution choice:
+Repository-grounded software engineering, because released code and automatic
+correctness metrics reduce dependence on outside experts.
+
+Best mature research choice:
+Secure RAG, because IEEE supplies privacy, poisoning, attribution, code-security,
+and risk/evaluation papers.
+
+Best deployed-system choice:
+Educational/programming RAG, because MoodleBot provides unusually strong citation
+and real-classroom evidence, while KAG and bilingual artifacts provide implementation
+starting points.
+
+Legal RAG remains a strong local alternative. It ranks eighth in the harmonized IEEE
+union, and the citation/popularity views contain influential legal surveys and
+systems. However, the ScienceDirect collection currently provides the more directly
+relevant Vietnamese legal-retrieval baseline.
+

@@ -1,0 +1,186 @@
+RAG CAPSTONE TOPIC CANDIDATES BY LITERATURE SOURCE
+==================================================
+
+IEEE XPLORE
+------------
+
+1. Repository-Aware Code Assistant
+   Product type: Developer chatbot / IDE assistant
+   What it does: Answers questions about an entire codebase using functions,
+   dependencies, tests, and documentation.
+   Input: A repository and a developer question.
+   Expected output: A grounded explanation, relevant files/functions, and source
+   references.
+   Comment: old paper (Feb 2025)
+
+2. RAG-Based Test Case Generator
+   Product type: Software automation tool
+   What it does: Retrieves requirements and related source code to generate relevant
+   test cases.
+   Input: A requirement, issue, or target function.
+   Expected output: Executable unit tests with links to supporting requirements and
+   code.
+   Comment: maybe? but test cases generation might need further learnings
+
+3. Secure RAG Attack Detector
+   Product type: Security testing dashboard
+   What it does: Tests whether poisoned documents or indirect prompt injections can
+   manipulate a RAG system.
+   Input: A RAG corpus, test questions, and attack documents.
+   Expected output: A risk score, detected malicious passages, affected answers, and
+   an evaluation report.
+   Comment: has to based off a working LLM system?
+
+4. Course-Grounded Programming Assistant
+   Product type: Educational chatbot
+   What it does: Answers course questions and provides programming hints based only
+   on authorized course materials.
+   Input: Lectures, labs, assignments, and a student's question or code.
+   Expected output: A cited explanation, relevant lesson, and guided hint.
+   Comment: old paper
+
+
+SCIENCEDIRECT
+-------------
+
+1. Version-Aware Vietnamese Legal Assistant
+   Product type: Search engine / chatbot
+   What it does: Retrieves the correct legal articles while considering effective
+   dates, amendments, and superseded versions.
+   Input: A legal question and relevant date.
+   Expected output: An explanation with exact articles, clauses, citations, and
+   version status.
+   Comment: chatbot, old paper, consider later
+
+2. Industrial Maintenance Knowledge Assistant
+   Product type: Maintenance chatbot / decision-support dashboard
+   What it does: Uses equipment manuals and maintenance knowledge to identify
+   possible faults and recommend actions.
+   Input: Machine type, symptoms, error codes, or a technician's question.
+   Expected output: Possible causes, recommended checks, and supporting manual
+   sections.
+   Comment: has potential, but unfamiliar domain
+
+3. Conversational CAD Assistant
+   Product type: Design automation tool
+   What it does: Converts natural-language or visual instructions into executable
+   CAD operations.
+   Input: Text, image, speech, or a selected CAD component.
+   Expected output: A generated or modified CAD model with an operation history.
+   Comment: same as 2
+
+4. Self-Correcting Log Analysis System
+   Product type: Developer automation tool / monitoring dashboard
+   What it does: Parses application logs, discovers event templates, and corrects
+   uncertain parsing results.
+   Input: Raw system or application logs.
+   Expected output: Structured log events, templates, anomalies, and confidence
+   scores.
+   Comment: good
+
+
+SPRINGER
+--------
+
+1. Citation-Grounded Vietnamese Legal Search
+   Product type: Search engine / legal assistant
+   What it does: Finds exact Vietnamese legal provisions and generates answers
+   supported by reliable citations.
+   Input: A legal question and relevant date.
+   Expected output: Applicable articles, a cited explanation, and document-validity
+   information.
+   Comment: good
+
+2. Curriculum-Grounded Educational Tutor
+   Product type: Educational chatbot
+   What it does: Detects student misconceptions and provides course-grounded hints
+   without immediately revealing solutions.
+   Input: Course materials and a student's question or attempted solution.
+   Expected output: Misconception analysis, the relevant lesson, and guided hints.
+   Comment: edu chatbot -> saturated
+
+3. Multilingual Prompt-Injection Detector
+   Product type: Security API / monitoring dashboard
+   What it does: Detects malicious instructions hidden in documents before they
+   influence a RAG system.
+   Input: A retrieved document, PDF, or prompt context.
+   Expected output: An attack classification, risk score, suspicious text spans, and
+   an allow/block recommendation.
+   Comment: good
+
+
+SCOPUS
+------
+
+1. RAG Poisoning Detection and Forensics System
+   Product type: Security dashboard / testing tool
+   What it does: Detects corrupted knowledge-base documents and traces which passages
+   caused a manipulated answer.
+   Input: A RAG corpus, retrieved passages, and a generated answer.
+   Expected output: Attack risk, malicious passages, affected answers, and cleanup
+   recommendations.
+   Comment: good, but still need to be based on a working system?
+
+2. Multi-Turn Vietnamese Legal Consultation Assistant
+   Product type: Legal chatbot / search engine
+   What it does: Maintains conversation context while retrieving exact, currently
+   valid Vietnamese legal provisions.
+   Input: Follow-up legal questions and the relevant date.
+   Expected output: A context-aware answer with exact articles, clauses, and
+   citations.
+   Comment: high potential
+
+3. Ontology-Validated Course Assistant
+   Product type: Educational chatbot / LMS plugin
+   What it does: Answers course questions and validates responses against a course
+   knowledge structure.
+   Input: Course documents and a student's question.
+   Expected output: A grounded answer or hint, citations, and validation warnings.
+   Comment: still chatbot? Isn't it a bit saturated
+
+4. Grounded Lecture Material Generator
+   Product type: Content-generation automation tool
+   What it does: Produces teaching scripts or study materials from slides and
+   supporting documents.
+   Input: Slides, diagrams, lecturer notes, and reference documents.
+   Expected output: A structured lecture script, explanations, summaries, and source
+   references.
+   Comment: maybe but I can't grasp an actual use case for this
+
+
+SCOPUS ALT
+----------
+
+1. Structure-Aware Unit Test Generator
+   Product type: Developer automation tool
+   What it does: Uses repository structure, dependencies, and existing tests to
+   generate relevant unit tests.
+   Input: A Java repository and target method or class.
+   Expected output: Executable tests with referenced code dependencies.
+   Comment: high potential
+
+2. Repository-Level Code Completion Assistant
+   Product type: IDE assistant
+   What it does: Retrieves context from across a repository instead of considering
+   only the current file.
+   Input: A repository and incomplete code.
+   Expected output: Code completion consistent with project APIs and structure.
+   Comment: high potential, but would it better than the ordinary coding agent like Codex or Claude Code?
+
+3. Requirements Traceability Assistant
+   Product type: Analysis dashboard / automation tool
+   What it does: Finds relationships between requirements and between requirements
+   and source code.
+   Input: Requirements documents and a repository.
+   Expected output: Suggested traceability links with confidence and supporting
+   evidence.
+   Comment: maybe potential
+
+4. Repository Summarization System
+   Product type: Documentation generator
+   What it does: Produces grounded documentation at function, class, module, and
+   repository levels.
+   Input: A source-code repository.
+   Expected output: An architecture summary, component descriptions, dependencies,
+   and source references.
+   Comment: still having to answer the question about comparing with normal coding agents.

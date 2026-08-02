@@ -1,0 +1,503 @@
+SCOPUS DOMAIN RANKING AND RECOMMENDED PAPER SHORTLIST
+====================================================
+
+Source:
+explore/scopus_export_Jul 29-2026_a5c356bb-661e-4866-89f2-c503919a3c8e.csv
+
+Prepared: 2026-07-29
+
+IMPORTANT SOURCE NOTE
+---------------------
+Every numbered paper in this file appears in the supplied Scopus CSV. Internet
+search was used only to verify public repositories, datasets, models, project pages,
+and paper URLs. No externally discovered paper was added to the numbered shortlist.
+
+Dataset overview:
+- 8,000 Scopus records.
+- Publication years: 4,228 from 2025; 3,730 from 2026; 42 indexed as 2027.
+- 5,028 conference papers and 2,474 journal articles, plus smaller document types.
+- Every record has an abstract; 6,540 have author keywords.
+
+Assumptions:
+- The team is primarily computer-science students.
+- The thesis lasts one or two semesters.
+- The team has commodity hardware, a modest GPU, or limited API credits.
+- The team does not have privileged clinical or corporate data.
+
+Artifact labels:
+[A] Strong executable baseline: verified public code plus data/evaluation assets.
+[B] Working implementation: verified public system/code, but reproduction assets may
+    be incomplete or require team-created data.
+[C] Read/method baseline: useful experimental design, but no verified full repository.
+
+Always check repository and dataset licenses before redistribution.
+
+
+PART 1: FIVE MOST COMMON APPLICATION DOMAINS
+============================================
+
+Method
+------
+The CSV has no application-domain column. Domains were therefore estimated using
+high-precision keyword rules over each paper's title and author keywords. The counts
+are approximate and multi-label: one paper may belong to more than one domain.
+Abstracts were reviewed when selecting papers but were not used for raw domain counts,
+because background statements in abstracts create too many false positives.
+
+Rank  Domain                         Approx. papers   Prevalence   Feasibility
+----  -----------------------------  --------------   ----------   -----------
+1     Healthcare and biomedicine     1,214            15.2%        2/5
+2     Education and learning           628             7.8%        5/5
+3     Business and finance              415             5.2%        3/5
+4     Cybersecurity and privacy         353             4.4%        5/5
+5     Law, policy and government        340             4.2%        4/5
+
+Interpretation and decision
+---------------------------
+
+1. Healthcare and biomedicine
+   Most common, but not selected. A credible clinical thesis frequently requires
+   protected data, ethics approval, medical expertise, and specialist validation.
+   It remains possible only if the team already has a medical collaborator and a
+   bounded public benchmark.
+
+2. Education and learning
+   SELECTED. Course materials are obtainable, HCMUS students/instructors are reachable
+   for evaluation, and retrieval accuracy, groundedness, hint quality, and learning
+   outcomes can be measured. Several Scopus papers have working open-source systems.
+
+3. Business and finance
+   Not selected for the primary shortlist. The category is broad and many convincing
+   applications depend on private customer, accounting, or enterprise documents.
+   It becomes attractive if the team has a real company partner and permission to use
+   representative data.
+
+4. Cybersecurity and privacy
+   SELECTED. Scopus contains mature attack and defense baselines with public code,
+   standard QA datasets, and objective metrics such as attack success rate, accuracy,
+   false-positive rate, latency, and clean-task utility.
+
+5. Law, policy and government
+   SELECTED. Legal documents are textual and often public; retrieval and citation
+   metrics are clear; and the Scopus export contains strong open legal RAG toolkits.
+   Vietnamese localization offers a defensible contribution, provided legal experts
+   review the evaluation set and outputs are not presented as legal advice.
+
+Final three recommendations:
+1. Secure RAG against corpus poisoning and indirect prompt injection.
+2. Citation-grounded Vietnamese legal RAG.
+3. Curriculum-grounded educational RAG/tutoring.
+
+
+PART 2: SECURE RAG AGAINST POISONING AND PROMPT INJECTION
+=========================================================
+
+Recommended starting combination
+--------------------------------
+Use PoisonedRAG as the attack baseline and RAGDefender as the primary defense. Add
+AttnTrace if the thesis focuses on locating the malicious passage, or RAG-SAGE if it
+focuses on privacy rather than integrity. Restrict all experiments to systems and
+datasets the team owns or is explicitly authorized to test.
+
+1. [A] PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented
+   Generation of Large Language Models
+
+   Venue/year: USENIX Security, 2025
+   Paper: https://arxiv.org/abs/2402.07867
+   Official code: https://github.com/sleeepeer/PoisonedRAG
+   Scopus "Cited by" value in export: 49
+
+   Why it is the essential attack baseline:
+   - Defines a concrete corpus-poisoning threat model for RAG.
+   - Provides code for adversarial-passage generation and evaluation.
+   - Uses standard datasets including Natural Questions, MS MARCO, and HotpotQA.
+   - Measures whether a few injected passages can force target answers.
+
+   What to reproduce:
+   - Clean answer accuracy/exact match.
+   - Retrieval rate of poisoned passages.
+   - End-to-end attack success rate (ASR).
+   - Results across at least two retrievers and two generators.
+
+   Feasible extension:
+   Test transfer to Vietnamese documents and queries, or build a cross-dataset
+   evaluation showing whether defenses tuned on English QA generalize.
+
+2. [A, recommended primary defense] Rescuing the Unpoisoned: Efficient Defense
+   Against Knowledge Corruption Attacks on RAG Systems
+
+   Venue/year: ACSAC, 2025
+   DOI: https://doi.org/10.1109/ACSAC67867.2025.00093
+   Code/artifacts: https://github.com/SecAI-Lab/RAGDefender
+   Installable package: https://pypi.org/project/ragdefender/
+
+   Why it is the best student-team defense baseline:
+   - Filters adversarial passages after retrieval without additional model training.
+   - Repository includes datasets, poisoned corpora, scripts, expected outputs, and
+     separate reproduction claims.
+   - Directly supports PoisonedRAG and multiple other attack settings.
+   - Easier to modify and ablate than a large end-to-end trained defense.
+
+   Thesis extensions:
+   - Add multilingual features or Vietnamese embedding models.
+   - Compare clustering/concentration features against a small transformer detector.
+   - Optimize ASR, clean accuracy, false positives, and latency jointly.
+
+3. [A] AttnTrace: Contextual Attribution of Prompt Injection and Knowledge
+   Corruption
+
+   Venue/year: IEEE Symposium on Security and Privacy, 2026
+   DOI: https://doi.org/10.1109/SP63933.2026.00198
+   Code/data/notebook: https://github.com/Wang-Yanting/AttnTrace
+
+   Why use:
+   - Locates text spans responsible for an LLM output before classifying an attack.
+   - Includes a quick-start notebook and scripts for LongBench prompt injection and
+     PoisonedRAG knowledge corruption.
+   - Covers long-context attacks such as malicious instructions hidden in papers,
+     code, or agent memory.
+
+   Feasibility warning:
+   The reference configuration uses Llama 3.1 8B and attention access. Begin with a
+   small subset and one open-weight model before scaling.
+
+4. [A] Traceback of Poisoning Attacks to Retrieval-Augmented Generation
+
+   Method/system: RAGForensics
+   Venue/year: ACM Web Conference, 2025
+   DOI: https://doi.org/10.1145/3696410.3714756
+   Paper: https://arxiv.org/abs/2504.21668
+   Code: https://github.com/zhangbl6618/RAG-Responsibility-Attribution
+   Scopus "Cited by" value in export: 12
+
+   Why use:
+   - Changes the problem from only detecting a bad answer to tracing which stored
+     passages caused it.
+   - Evaluates against several poisoning attacks and datasets.
+   - Useful if the thesis contribution is incident investigation, provenance, or
+     knowledge-base cleanup.
+
+5. [A] Mitigating the Privacy Issues in Retrieval-Augmented Generation (RAG)
+   via Pure Synthetic Data
+
+   Method: RAG-SAGE
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.1247
+   Code: https://github.com/phycholosogy/RAG-SAGE
+   Scopus "Cited by" value in export: 8
+
+   Why use:
+   - Gives the team a second secure-RAG axis: privacy leakage rather than poisoning.
+   - Public code permits comparison of private-source RAG with synthetic-data
+     alternatives.
+   - Appropriate if the thesis focuses on sensitive institutional documents.
+
+6. [A] Beyond Text: Unveiling Privacy Vulnerabilities in Multi-modal
+   Retrieval-Augmented Generation
+
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.1259
+   Code: https://github.com/phycholosogy/MRAG-privacy
+
+   Why use:
+   - Extends privacy attacks from text-only RAG to multimodal retrieval.
+   - Provides an advanced follow-on experiment after a text-only baseline works.
+   - Relevant if the team wants to study PDFs, screenshots, slides, or document
+     images rather than plain text.
+
+Minimum defensible secure-RAG experiment
+---------------------------------------
+- Threat model: an attacker can add or modify documents in the retrieval corpus but
+  cannot modify the model or defense.
+- Baselines: no defense; similarity/perplexity filter; RAGDefender; one proposed
+  hybrid or multilingual defense.
+- Data: at least two public QA datasets plus a bounded Vietnamese test collection.
+- Metrics: ASR, clean exact match/accuracy, poisoned-document retrieval rate,
+  precision/recall/F1 of poison detection, false-positive rate, latency, and cost.
+- Evaluation: include adaptive or paraphrased attacks not seen during tuning.
+- Safety: do not target third-party RAG services, accounts, or knowledge bases.
+
+
+PART 3: CITATION-GROUNDED VIETNAMESE LEGAL RAG
+==============================================
+
+Recommended starting combination
+--------------------------------
+Use LexRAG as the main end-to-end toolkit and AusLaw as the citation-prediction
+baseline. Add HCLeK for long legal documents or ScenarioBench for auditable,
+clause-grounded evaluation. Replace the foreign corpus with one bounded Vietnamese
+legal area and preserve document versions/effective dates.
+
+1. [A, recommended end-to-end baseline] LexRAG: Benchmarking
+   Retrieval-Augmented Generation in Multi-Turn Legal Consultation Conversation
+
+   Venue/year: ACM SIGIR, 2025
+   DOI: https://doi.org/10.1145/3726302.3730340
+   Code/data/toolkit: https://github.com/CSHaitao/LexRAG
+   Scopus "Cited by" value in export: 9
+
+   Why it is the strongest overall baseline:
+   - Includes 1,013 five-turn legal conversations.
+   - Includes a corpus of 17,228 Chinese statutory provisions.
+   - Supports query rewriting, BM25/QLD, dense retrieval, FAISS, local or API
+     generators, and modular prompt builders.
+   - Provides retrieval metrics (Recall, Precision, F1, nDCG, MRR), generation
+     metrics, and an LLM-as-judge implementation.
+
+   Thesis extension:
+   Build a Vietnamese multi-turn legal consultation benchmark and test whether
+   conversation-aware query rewriting improves exact article retrieval without
+   increasing unsupported claims.
+
+2. [A, recommended citation baseline] Legal Citation Prediction with LLMs:
+   A Comparative Evaluation of Instruction Tuning, Retrieval, and
+   Jurisdiction-Specific Pre-training on the AusLaw Citation Benchmark
+
+   Venue/year: Artificial Intelligence and Law, 2026
+   DOI: https://doi.org/10.1007/s10506-026-09506-9
+   Project: https://auslawbench.github.io/
+   Dataset: https://huggingface.co/datasets/auslawbench/AusLaw-Citation-Benchmark
+   Models: https://huggingface.co/auslawbench
+   Scopus "Cited by" value in export: 1
+
+   Why use:
+   - Provides 55k legal citation examples, models, and notebook code.
+   - Compares prompting, sparse/dense retrieval, fine-tuning, and reranking.
+   - Establishes that retrieval and domain adaptation matter more than merely using
+     a larger standalone generative model.
+
+   Vietnamese extension:
+   Predict the exact Vietnamese statute/article/circular cited by a passage, then
+   evaluate citation accuracy separately from answer fluency.
+
+3. [A] HCLeK: Hierarchical Compression of Legal Knowledge for
+   Retrieval-Augmented Generation
+
+   Venue/year: CIKM, 2025
+   DOI: https://doi.org/10.1145/3746252.3760925
+   Code: https://github.com/fupanY/HCLeK
+
+   Why use:
+   - Targets long, hierarchical legal documents rather than treating every chunk as
+     an unrelated flat passage.
+   - Useful for Vietnamese documents organized into parts, chapters, sections,
+     articles, and clauses.
+   - Provides a concrete compression/retrieval method to compare against naive
+     fixed-size chunking.
+
+4. [A/B] PAKTON: A Multi-Agent Framework for Question Answering in Long Legal
+   Agreements
+
+   Venue/year: EMNLP, 2025
+   DOI: https://doi.org/10.18653/v1/2025.emnlp-main.403
+   Code/system/evaluation:
+   https://github.com/petrosrapto/PAKTON
+
+   Why use:
+   - Fully open-source, end-to-end contract analysis with on-premise deployment.
+   - Includes retrieval, classification, qualitative evaluation, human evaluation,
+     and LegalBenchRAG/ContractNLI experiments.
+   - Useful if the team chooses contracts or agreements instead of statutory QA.
+
+   Availability warning:
+   The repository notes that some deployed-version components are still being added.
+   Verify the exact reproduction path before committing the thesis to its full
+   multi-agent architecture.
+
+5. [A] ScenarioBench: Trace-Grounded Compliance Evaluation for Text-to-SQL
+   and RAG
+
+   Venue/year: CASCON, 2025
+   DOI: https://doi.org/10.1109/CASCON66301.2025.00111
+   Artifact/code:
+   https://github.com/ShabnamAtf/ScenarioBench/releases/tag/v0.1.0
+
+   Why use:
+   - Requires answers/decisions to cite clause IDs from the retrieved policy canon.
+   - Evaluates decision accuracy, trace completeness/correctness/order, retrieval,
+     SQL result equivalence, latency, policy coverage, and hallucination rate.
+   - Provides a useful design pattern for falsifiable, audit-ready legal RAG.
+
+   Limitation:
+   The seed suite is small. Use its evaluation design, but create a larger,
+   expert-reviewed Vietnamese set.
+
+6. [A, public dataset] BR-TaxQA-R: A Dataset for Question Answering with
+   References for Brazilian Personal Income Tax Law, Including Case Law
+
+   Venue/year: 2026
+   DOI: https://doi.org/10.1007/978-3-032-15987-8_14
+   Paper: https://arxiv.org/abs/2505.15916
+   Dataset: https://huggingface.co/datasets/unicamp-dl/BR-TaxQA-R
+
+   Why use:
+   - Contains 715 official tax questions enriched with statutory norms and case law.
+   - Demonstrates a practical schema for QA with references.
+   - Compares segmentation/RAG configurations with commercial search assistants.
+   - Particularly useful as a template for constructing a bounded Vietnamese tax,
+     labor, education, or administrative-law dataset.
+
+Minimum defensible legal-RAG experiment
+--------------------------------------
+- Scope: one Vietnamese legal area, not all Vietnamese law.
+- Corpus: official documents with hierarchy, source URL, issue date, effective date,
+  amendment/supersession status, and clause/article identifiers.
+- Baselines: BM25; dense retrieval; hybrid retrieval; hybrid plus reranker.
+- RAG variants: retrieval-only, naive RAG, and citation-constrained RAG.
+- Metrics: Recall@5/10, MRR/nDCG, exact article match, citation precision, citation
+  entailment/faithfulness, answer correctness, temporal correctness, latency, cost.
+- Evaluation set: at least 100 questions with expert-reviewed answer passages.
+- Safety: research assistance only; every answer must expose its sources and warning.
+
+
+PART 4: CURRICULUM-GROUNDED EDUCATIONAL RAG/TUTORING
+====================================================
+
+Recommended starting combination
+--------------------------------
+Use LAMB if the goal is a deployable HCMUS/Moodle learning assistant. Use CyberBOT
+if the goal is a smaller research pipeline with ontology validation, or EduCraft if
+the goal is multimodal lecture-material generation. Use the admissions paper's
+evaluation matrix even when implementing one of the open systems.
+
+1. [A/B, recommended deployable system] LAMB: An Open-Source Software
+   Framework to Create Artificial Intelligence Assistants Deployed and Integrated
+   into Learning Management Systems
+
+   Authors: Marc Alier, Juanan Pereira, Francisco Jose Garcia-Penalvo,
+   Maria Jose Casan, Jose Cabre
+   Venue/year: Computer Standards & Interfaces, 2025
+   DOI: https://doi.org/10.1016/j.csi.2024.103940
+   Code: https://github.com/Lamb-Project/lamb
+   Project/documentation: https://lamb-project.org/en/
+   Scopus "Cited by" value in export: 46
+
+   Why it is the best working-system starting point:
+   - Mature open-source web application with active development.
+   - Ingests educational documents, performs RAG, and produces citations.
+   - Supports local models, self-hosting, Moodle/LTI integration, privacy controls,
+     testing/debugging, and multilingual UI.
+
+   Research warning:
+   Deploying LAMB alone is not a thesis contribution. Add a controlled retrieval,
+   pedagogical, multilingual, or evaluation innovation and compare it scientifically.
+
+2. [A] CyberBOT: Ontology-Grounded Retrieval Augmented Generation for
+   Reliable Cybersecurity Education
+
+   Venue/year: 2025
+   DOI: https://doi.org/10.1145/3746252.3761478
+   Code/data: https://github.com/rccrdmr/CyberBOT
+
+   Why use:
+   - End-to-end backend, frontend, dataset, document chunking, FAISS indexing, and
+     QA-pair embedding are public.
+   - Combines course RAG with ontology-based answer validation.
+   - Handles follow-up questions through intent rewriting.
+   - Naturally connects the education and cybersecurity recommendations.
+
+   Thesis extension:
+   Replace the cybersecurity course with an HCMUS subject, compare standard RAG
+   against ontology-validated RAG, and measure unsupported-claim reduction.
+
+3. [A/B] EduCraft: A System for Generating Pedagogical Lecture Scripts from
+   Long-Context Multimodal Presentations
+
+   Venue/year: 2025
+   DOI: https://doi.org/10.1145/3746252.3761578
+   Code: https://github.com/wyuc/EduCraft
+
+   Why use:
+   - Provides multimodal slide processing, VLM and caption-plus-LLM workflows,
+     optional RAG, prompt templates, evaluation scripts, and local-model support.
+   - Suitable for a thesis on grounded lecture scripts or learning materials rather
+     than conversational tutoring.
+
+   Availability warning:
+   The code is runnable and MIT-licensed, but the evaluation presentations are not
+   packaged as a large standard benchmark. Plan to create a local evaluation corpus.
+
+4. [A/B] KAG: A Scalable Knowledge-Augmented Generation System for
+   Educational Content Management
+
+   Venue/year: 2025
+   DOI: https://doi.org/10.1109/FLLM67465.2025.11391105
+   Code/resources: https://github.com/Hadi-Hsn/KAG
+
+   Why use:
+   - Public implementation of a document-ingestion and educational retrieval system.
+   - Focuses on source attribution, scalable content management, and semantic access.
+   - Useful as an engineering baseline if the team chooses a campus knowledge hub
+     rather than a pedagogically adaptive tutor.
+
+5. [C, recommended experimental design] Design and Performance Evaluation of
+   LLM-Based RAG Pipelines for Chatbot Services in International Student Admissions
+
+   Venue/year: Electronics, 2025
+   DOI: https://doi.org/10.3390/electronics14153095
+   Scopus "Cited by" value in export: 7
+
+   Why read:
+   - Compares recursive versus semantic chunking.
+   - Compares dense, MMR, hybrid, multi-query, and multi-vector retrieval.
+   - Uses both LLM-generated and human-authored QA references.
+   - Reports RAGAS metrics, classic text metrics, confidence intervals, and latency.
+
+   Availability warning:
+   No official public code repository was verified, and institutional source
+   documents are available only on request. Reuse the evaluation design on HCMUS
+   public course or admissions documents.
+
+6. [C] Optimizing RAG in Programming Education: A Comparative Study of Models
+   and Strategies
+
+   Venue/year: IEEE Access, 2025
+   DOI: https://doi.org/10.1109/ACCESS.2025.3629843
+
+   Why read:
+   - Directly relevant to a computer-science student team and programming courses.
+   - Compares commercial/open models, retrieval design, reranking, and prompting.
+   - Reports reranking as especially helpful for lightweight open models.
+   - Provides a natural thesis direction: a tutor that gives grounded hints and code
+     feedback without leaking full solutions.
+
+Minimum defensible education experiment
+---------------------------------------
+- Course: one subject such as Database Systems or Introductory Programming.
+- Data: instructor-approved notes/slides/assignments plus a held-out QA set.
+- Baselines: plain LLM; naive RAG; reranked RAG; proposed pedagogy- or
+  ontology-constrained RAG.
+- Retrieval metrics: Recall@k, MRR, nDCG.
+- Generation metrics: correctness, faithfulness/citation accuracy, relevance,
+  solution-leakage rate, latency, and cost.
+- Educational evaluation: blinded instructor rubric plus a small approved pre/post
+  test or misconception-correction study.
+- Student data must be anonymized; obtain required institutional and participant
+  approval before a user study.
+
+
+FINAL PRIORITY AND THESIS-SCOPE ADVICE
+======================================
+
+1. Secure RAG
+   Best reproducibility and clearest objective evaluation. The practical first step is
+   to reproduce PoisonedRAG and RAGDefender on a small public QA subset, then add a
+   cross-dataset or Vietnamese generalization experiment.
+
+2. Vietnamese legal RAG
+   Strongest local relevance. Begin with LexRAG's modular toolkit and AusLaw's
+   citation-focused evaluation, then construct one narrow expert-reviewed Vietnamese
+   corpus and question set.
+
+3. Educational RAG
+   Easiest to demonstrate to real users. Begin with LAMB or CyberBOT, but make the
+   thesis contribution a measured retrieval/pedagogical improvement rather than the
+   chatbot interface itself.
+
+Avoid "we built a chatbot" as the research claim. A defensible contribution should be
+one or more of:
+- a public, carefully documented Vietnamese dataset or benchmark;
+- a new retrieval, reranking, defense, or validation method;
+- a reproducible failure-mode analysis;
+- a multilingual or low-resource evaluation;
+- or a controlled user study that measures outcomes beyond user satisfaction.

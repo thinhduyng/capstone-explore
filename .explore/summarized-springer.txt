@@ -1,0 +1,427 @@
+PAPER SHORTLIST FOR THREE FEASIBLE CAPSTONE DIRECTIONS
+=====================================================
+
+Prepared from explore/SearchResults.csv, with public artifact availability checked
+on 2026-07-29.
+
+Assumptions:
+- The team is primarily computer-science students.
+- The project lasts one or two semesters.
+- Commodity hardware, a modest GPU, or limited API credits are available.
+- The team does not have privileged legal, educational, or security data.
+
+Artifact labels:
+[A] Best baseline: public code plus usable data/model/notebook.
+[B] Partial baseline: public data or model, but no verified complete implementation.
+[C] Read: valuable method/evaluation paper, but no verified public reproduction package.
+
+Important: "public" does not mean unrestricted. Check each repository/dataset license
+before redistributing data or releasing a derivative system.
+
+
+RECOMMENDATION 1: CITATION-GROUNDED VIETNAMESE LEGAL RAG
+=======================================================
+
+Best starting combination
+-------------------------
+Use paper 1 as the executable retrieval/citation baseline, paper 2 for a lightweight
+BM25-versus-dense retrieval experiment, and paper 5 to design a broader legal
+evaluation. Replace the Australian/Pakistani corpus with Vietnamese legislation and
+add temporal validity and citation-faithfulness tests.
+
+1. [A] Legal Citation Prediction with LLMs: A Comparative Evaluation of
+   Instruction Tuning, Retrieval, and Jurisdiction-Specific Pre-training on the
+   AusLaw Citation Benchmark
+
+   Authors: Jiuzhou Han, Paul Burgess, Ehsan Shareghi
+   Venue/year: Artificial Intelligence and Law, 2026
+   DOI/paper: https://doi.org/10.1007/s10506-026-09506-9
+   Project: https://auslawbench.github.io/
+   Dataset: https://huggingface.co/datasets/auslawbench/AusLaw-Citation-Benchmark
+   Models: https://huggingface.co/auslawbench
+   Runnable notebook:
+   https://colab.research.google.com/drive/1N3DR3xbN8HoGuzE39kCpYXB4qyPjk9gt?usp=sharing
+
+   Why it is the best baseline:
+   - Supplies 55k real-world examples, a 1k test split, models, and notebook code.
+   - Directly compares prompting, BM25/dense retrieval, fine-tuning, and reranking.
+   - Shows that standalone generation is a weak legal-citation baseline and that
+     hybrid retrieval/reranking performs best.
+
+   What to reproduce:
+   - BM25, dense retrieval, and hybrid/reranked retrieval.
+   - Recall@k/MRR or the paper's retrieval metrics.
+   - Exact citation accuracy and explanations for why a source should be cited.
+
+   Thesis extension:
+   Create a Vietnamese statute/citation benchmark, compare multilingual and
+   Vietnamese embeddings, and require every generated answer to point to the exact
+   article/paragraph that supports it.
+
+2. [C, easy to reimplement] Semantic Clause Retrieval for Trademark Law Using
+   Transformer Encoders and Lexical Baselines: A Cross-Domain Agri-Robotics
+   Compliance Case Study
+
+   Authors: Muhammad Asfand E Yar et al.
+   Venue/year: Scientific Reports, 2026
+   DOI/paper: https://doi.org/10.1038/s41598-026-43098-3
+
+   Why read/use:
+   - A small, understandable clause-level retrieval baseline.
+   - Compares TF-IDF, BM25, and off-the-shelf sentence encoders with cosine
+     similarity.
+   - Uses AP/MAP and expert relevance judgments rather than only answer fluency.
+   - Reported methodology is simple enough to rebuild with rank_bm25,
+     sentence-transformers, and FAISS even though no official repository was found.
+
+   Limitation:
+   The main trademark evaluation has only ten practitioner-style queries, so do not
+   treat its reported scores as a robust general benchmark.
+
+3. [B/C] Neural Reranking for UK Statutory Retrieval: Provision-Level Evaluation
+   and an Open Distilled Model
+
+   Authors: Alshehri et al.
+   Venue/year: Artificial Intelligence and Law, 2026
+   DOI/paper: https://doi.org/10.1007/s10506-025-09501-6
+   Accessible manuscript:
+   https://adaptive-intelligence.co.uk/wp-content/uploads/2026/02/alshehri2026neural.pdf
+
+   Why read/use:
+   - Compares BM25 and MPNet first-stage retrieval followed by neural reranking.
+   - Uses 100 queries with graded provision-level relevance judgments.
+   - Describes corpus extraction/preprocessing and an open distilled reranker.
+
+   Availability warning:
+   The accessible double-blind manuscript says the repository link was omitted.
+   Confirm the final publisher page/model location before selecting it as the team's
+   only executable baseline.
+
+4. [C] LegalAI Research in the LLM Era: Data, Modeling and Evaluation
+
+   Venue/year: Artificial Intelligence Review, 2026
+   DOI/paper: https://doi.org/10.1007/s10462-026-11514-9
+
+   Why read:
+   Use this survey to map the field, choose a legal task, identify datasets/models,
+   and avoid presenting a generic chatbot as a research contribution.
+
+5. [A, external supporting baseline] LegalBench: A Collaboratively Built Benchmark
+   for Measuring Legal Reasoning in Large Language Models
+
+   Authors: Neel Guha et al.
+   Year: 2023
+   Paper: https://arxiv.org/abs/2308.11462
+   Code/data: https://github.com/HazyResearch/legalbench
+
+   Why use:
+   - Contains 162 tasks contributed by legal and technical experts.
+   - Includes datasets, prompt configurations, notebook, and evaluation code.
+   - Useful for designing a Vietnamese legal benchmark that measures extraction,
+     rule application, interpretation, and issue spotting separately.
+
+6. [A, external supporting baseline] LexGLUE: A Benchmark Dataset for Legal
+   Language Understanding in English
+
+   Authors: Ilias Chalkidis et al.
+   Venue/year: ACL, 2022
+   Paper: https://aclanthology.org/2022.acl-long.297/
+   Code/data: https://github.com/coastalcph/lex-glue
+
+   Why use:
+   A mature legal-NLP benchmark and training codebase. It is more suitable than
+   LegalBench when the thesis focuses on classification or retrieval encoders rather
+   than end-to-end generative RAG.
+
+Useful Vietnamese resources (resources, not substitutes for peer-reviewed baselines)
+-----------------------------------------------------------------------------
+- Reproducible Vietnamese legal-document/instruction dataset generator:
+  https://github.com/duyet/vietnamese-legal-documents-dataset
+- Vietnamese legal QA data card:
+  https://huggingface.co/datasets/kiethuynhanh/vnlegal-dataset
+- Related Vietnamese paper: Answering Legal Questions by Learning Neural Attentive
+  Text Representation (COLING 2020):
+  https://aclanthology.org/2020.coling-main.86/
+
+Minimum defensible experiment
+-----------------------------
+- Corpus: one bounded Vietnamese legal area, with document version/effective dates.
+- Baselines: BM25; one multilingual dense retriever; hybrid BM25+dense; one reranker.
+- RAG variants: retrieval-only and retrieval-plus-generation.
+- Metrics: Recall@5/10, MRR or nDCG, exact article match, citation precision,
+  citation entailment/faithfulness, answer correctness, latency, and cost.
+- Evaluation set: at least 100 manually reviewed questions with answer passages.
+- Safety: label the system as research assistance, not legal advice.
+
+
+RECOMMENDATION 2: CURRICULUM-GROUNDED EDUCATIONAL TUTOR
+======================================================
+
+Best starting combination
+-------------------------
+Use MathDial or SocraticMath for a working dialogue/evaluation baseline, then adapt
+the RAG pipeline and evaluation dimensions from paper 1 below to a Vietnamese HCMUS
+course. Paper 2 is valuable for measuring actual learning rather than merely chatbot
+quality.
+
+1. [B, public source corpus] Evaluating Large Language Models in
+   Retrieval-Augmented Tutoring Systems: Methods and Emerging Tools
+
+   Authors: Owais Bhat et al.
+   Venue/year: SN Computer Science, 2026
+   DOI/paper: https://doi.org/10.1007/s42979-026-04789-w
+   Public textbook source:
+   https://ncert.nic.in/textbook.php?hehd1=1-10
+
+   Why use:
+   - Closest paper in SearchResults.csv to an executable curriculum-grounded tutor.
+   - Compares retrieval/generation configurations and semantic reranking.
+   - Evaluates Precision@K, Recall@K, BLEU, ROUGE-L, and BERTScore.
+   - Uses public textbook PDFs, so its data-collection setup can be recreated.
+
+   Availability warning:
+   No official reproduction repository was found. Treat the architecture as a
+   reference and implement a clean baseline using a standard RAG stack.
+
+2. [C] The Impact of an LLM-Based Educational Agent on Learning Achievement,
+   Cognitive Dynamics, and Student Perceptions in Computer Science Education
+
+   Venue/year: International Journal of STEM Education, 2026
+   DOI/paper: https://doi.org/10.1186/s40594-026-00641-y
+
+   Why read:
+   - Evaluates DBagent in real database-programming learning tasks.
+   - Measures learning performance, cognitive engagement, and student perceptions.
+   - Helps the team design a user study rather than reporting only automatic NLP
+     metrics.
+
+   Availability warning:
+   The dataset is available only from the authors on reasonable request, and no
+   public code repository was found.
+
+3. [C, prompts available] What Don't You Understand? Using Large Language Models
+   to Identify and Characterize Student Misconceptions About Challenging Topics
+
+   Authors: Michael J. Parker, Maria G. Zavala-Cerna
+   Venue/year: Education and Information Technologies, 2026
+   DOI/paper: https://doi.org/10.1007/s10639-026-13902-8
+
+   Why read/use:
+   - Combines quiz performance, response patterns, and lecture transcripts to locate
+     and explain misconceptions.
+   - Includes its prompts and expert-rating rubric in the appendix.
+   - Provides a strong extension: have a tutor retrieve course evidence and respond
+     differently according to the detected misconception.
+
+   Availability warning:
+   Quiz questions are intentionally not public; other data require author and ethics
+   approval. Recreate the protocol on team-owned course material instead.
+
+4. [A, strongest runnable education baseline] MathDial: A Dialogue Tutoring Dataset
+   with Rich Pedagogical Properties Grounded in Math Reasoning Problems
+
+   Authors: Jakub Macina et al.
+   Venue/year: Findings of EMNLP, 2023
+   Code/data/models: https://github.com/eth-nlped/mathdial
+
+   Why it is an excellent baseline:
+   - Includes 2,861 tutoring conversations with student confusions and pedagogical
+     dialogue-act labels.
+   - Includes train/test data, generation code, interactive evaluation, and supervised
+     fine-tuning.
+   - Provides a runnable Qwen2.5-1.5B tutor model, making it feasible on modest
+     hardware.
+   - Measures the important trade-off between helping a learner and revealing the
+     solution too early.
+
+   Thesis extension:
+   Add retrieval from Vietnamese course notes, support programming/database
+   misconceptions, and compare generic RAG with pedagogy-constrained RAG.
+
+5. [A] Boosting Large Language Models with Socratic Method for Conversational
+   Mathematics Teaching (SocraticMath)
+
+   Venue/year: CIKM, 2024
+   Code/data: https://github.com/ECNU-ICALK/SocraticMath
+
+   Why use:
+   - Official implementation and a dataset of 6,846 Socratic tutoring conversations.
+   - Gives a concrete dialogue strategy: review, heuristic guidance, rectification,
+     and summarization.
+   - A good baseline for evaluating whether the system teaches rather than simply
+     answers.
+
+6. [A] EduChat: A Large-Scale Language Model-Based Chatbot System for Intelligent
+   Education
+
+   Venue/year: CCKS, 2024
+   Paper/model/code: https://github.com/ECNU-ICALK/EduChat
+
+   Why use:
+   Provides an open educational chat model, data-processing scripts, local deployment,
+   Socratic teaching, essay feedback, and emotional-support modes. It is a useful
+   working system reference, although its Chinese/English focus requires adaptation.
+
+Optional dataset for feedback generation
+----------------------------------------
+- MathEDU: authentic student solutions plus expert feedback annotations:
+  https://github.com/NYCU-NLP-Lab/MathEDU
+
+Minimum defensible experiment
+-----------------------------
+- Course scope: one subject, such as Database Systems or Introductory Programming.
+- Baselines: plain LLM; naive RAG; reranked RAG; pedagogy-constrained reranked RAG.
+- Retrieval metrics: Recall@k, MRR/nDCG.
+- Answer metrics: correctness, groundedness/citation accuracy, hint quality, and
+  solution-leakage rate.
+- Educational metrics: pre/post quiz improvement or misconception correction, plus
+  a small blinded instructor rating.
+- Keep any student data anonymized and obtain the required institutional/participant
+  approval before a user study.
+
+
+RECOMMENDATION 3: SECURE RAG / PROMPT-INJECTION DETECTION
+========================================================
+
+Best starting combination
+-------------------------
+Start with paper 1 because its exact code is public and its classifiers are affordable.
+Use paper 2 or 3 to add realistic indirect/document-based attacks. Add SAFE-CACHE
+only as a second-stage extension because its full data/code are not public.
+
+1. [A, recommended primary baseline] Comparative Evaluation of Machine Learning
+   Methods for Protecting LLMs from Prompt Injection Attacks
+
+   Venue/year: International Journal of Information Security, 2026
+   DOI/paper: https://doi.org/10.1007/s10207-026-01264-8
+   Replication package:
+   https://github.com/toyhtowdomasydyt/llm-prompt-injection-detector
+
+   Why it is the best baseline:
+   - Compares Naive Bayes, LightGBM, Random Forest, MLP, fine-tuned DeBERTa,
+     DistilBERT and RoBERTa, specialized detectors, and LLM classifiers.
+   - Uses one consistent test set and reports accuracy, precision, recall, and F1.
+   - Traditional models are cheap and fast enough for a student project.
+   - The paper explicitly identifies cross-dataset generalization and hybrid
+     detection as open problems.
+
+   Thesis extension:
+   Evaluate cross-dataset and Vietnamese/multilingual generalization; construct a
+   two-stage low-latency detector; or measure detector utility inside a real RAG
+   pipeline rather than as isolated text classification.
+
+2. [A] Exploiting Large Language Models in Peer Review: Indirect Prompt Injection
+   Attacks and Integrity Probes
+
+   Venue/year: Scientometrics, 2026
+   DOI/paper: https://doi.org/10.1007/s11192-026-05695-x
+   Code/data: https://github.com/federicotorrielli/indirect-prompt-injection
+
+   Why use:
+   - Fully reproducible document/PDF-based indirect-injection pipeline.
+   - Includes upload validation, retry logic, repeated trials, and an experiment
+     dataset.
+   - Demonstrates an attack delivered through retrieved or uploaded content, which
+     is much closer to the threat model of RAG than direct jailbreak prompts.
+
+   Safe-use note:
+   Run only against systems/accounts that the team owns or is explicitly authorized
+   to test.
+
+3. [B, public dataset] Indirect Prompt Injection in Large Language Models
+
+   Venue/year: Neural Computing and Applications, 2026
+   DOI/paper: https://doi.org/10.1007/s00521-026-12266-x
+   Dataset named by the paper: Indirect Prompt Injection CV Dataset
+
+   Why use:
+   - Supplies realistic malicious CV/document scenarios.
+   - Separates detection from mitigation and reports attack success/bias effects.
+   - Useful for testing whether a malicious document can influence evaluation of
+     other clean documents.
+
+   Availability warning:
+   The publisher page points to a public IEEE DataPort/Dataverse resource, but no
+   complete official code repository was found. Verify download terms before making
+   it the primary dataset.
+
+4. [B] Enhancing Adversarial Resilience in Semantic Caching for Secure
+   Retrieval-Augmented Generation Systems
+
+   Authors: Mohanad Afiffy, Mohamed Waleed Fakhr, Fahima A. Maghraby
+   Venue/year: Scientific Reports, 2026
+   DOI/paper: https://doi.org/10.1038/s41598-026-36721-w
+   Open model:
+   https://huggingface.co/mohanadffy/gemma3-intent-paraphraser-lora
+
+   Why read/use:
+   - Introduces SAFE-CACHE, using cluster centroids instead of single-query nearest
+     neighbors to resist cache poisoning.
+   - Evaluates cache precision, attack success rate, and utility/security trade-offs.
+   - Provides a fine-tuned Gemma-3 1B paraphraser that can run on modest hardware.
+
+   Availability warning:
+   The full datasets are available only on request and no official code repository
+   was found. Rebuild only after the prompt-injection detector baseline works.
+
+5. [A, external supporting baseline] Embedding-Based Detection of Indirect Prompt
+   Injection Attacks in Large Language Models Using Semantic Context Analysis
+
+   Venue/year: Algorithms, 2026
+   Paper: https://www.mdpi.com/1999-4893/19/1/92
+   Code:
+   https://github.com/Abu-Hussain/Embedding-Based-Detection-of-Indirect-Prompt-Injection-Attacks-in-Large-Language-Models
+   Dataset:
+   https://huggingface.co/datasets/MAlmasabi/Indirect-Prompt-Injection-BIPIA-GPT
+
+   Why use:
+   - Public preprocessing, embedding extraction, classifier training, and evaluation.
+   - Model-agnostic and directly targets indirect prompt injection.
+   - The extended BIPIA dataset enables a valuable cross-dataset test against the
+     replication package in paper 1.
+
+6. [C, survey] End-to-End Security Threats and Defenses in Retrieval-Augmented
+   LLM Agents
+
+   Venue/year: Discover Artificial Intelligence, 2026
+   DOI/paper: https://doi.org/10.1007/s44163-026-01726-x
+
+   Why read:
+   Use its threat taxonomy to define the thesis scope and distinguish corpus
+   poisoning, indirect prompt injection, retriever manipulation, insecure tool use,
+   and output attacks. Do not attempt to solve every layer in one capstone.
+
+Minimum defensible experiment
+-----------------------------
+- Threat model: malicious instructions embedded in documents retrieved by a RAG
+  system; no attacks against third-party systems.
+- Baselines: rules; TF-IDF/logistic regression; one tree model; one small transformer;
+  one available specialized detector.
+- Data protocol: in-domain split plus genuinely separate cross-dataset evaluation.
+- Metrics: precision, recall, F1, false-positive rate, attack success rate after
+  defense, clean-task utility, latency, and memory/cost.
+- Required ablations: detector threshold; obfuscation/paraphrase types; direct versus
+  indirect attacks; with/without context; English versus Vietnamese.
+- A strong thesis result may be a carefully measured negative finding—for example,
+  high in-dataset F1 but poor cross-dataset recall—followed by a reproducible hybrid
+  defense that improves robustness without unacceptable false positives.
+
+
+OVERALL PRIORITY FOR THE TEAM
+=============================
+
+1. Secure RAG / prompt-injection detection
+   Best artifact availability and easiest fully reproducible baseline. Start from the
+   llm-prompt-injection-detector repository and add cross-dataset or Vietnamese tests.
+
+2. Vietnamese legal RAG
+   Strongest local relevance. Start from AusLaw's benchmark/notebook and build a
+   narrowly scoped, expert-reviewed Vietnamese retrieval/citation dataset.
+
+3. Educational tutor
+   Strong practical impact but a credible learning-effect claim requires a user study.
+   Start from MathDial/SocraticMath and keep the initial course scope small.
+
+Avoid making "we built a chatbot" the contribution. In all three directions, the
+research contribution should be a dataset, evaluation protocol, measured failure
+mode, retrieval/defense improvement, or carefully validated system design.

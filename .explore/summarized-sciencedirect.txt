@@ -1,0 +1,561 @@
+SCIENCEDIRECT DOMAIN RANKING AND RECOMMENDED PAPER SHORTLIST
+===========================================================
+
+Source directory:
+explore/ScienceDirect/
+
+Prepared: 2026-07-29
+
+PURPOSE
+-------
+This file applies the same analysis used for the Springer and Scopus exports to the
+ScienceDirect BibTeX collection. It:
+
+1. identifies the ten most discussed application domains;
+2. evaluates whether each domain is executable by a computer-science capstone team;
+3. recommends three thesis directions; and
+4. lists ScienceDirect papers to read or use as baselines, prioritizing papers with
+   verified public code, data, demos, or reproducible evaluation tasks.
+
+IMPORTANT SOURCE NOTE
+---------------------
+Every numbered paper in this file appears in one of the supplied ScienceDirect
+BibTeX files. Internet search was used only to verify repositories, project pages,
+datasets, and implementation availability. No externally discovered paper was added
+to the numbered shortlist.
+
+Dataset overview:
+- 24 BibTeX files were inspected.
+- 2,310 unique records were parsed; no duplicate DOI/title records were detected.
+- 860 records are from 2025 and 1,450 are from 2026.
+- The largest journals in the export include Expert Systems with Applications,
+  Knowledge-Based Systems, Advanced Engineering Informatics, Information Processing
+  & Management, Neurocomputing, and Journal of Systems and Software.
+
+Artifact labels:
+[A] Strong executable baseline: verified public code plus useful data or evaluation.
+[B] Runnable system/demo or partially released artifact; reproduction needs extra work.
+[C] Read/method baseline: valuable design, but no complete public repository verified.
+
+Always inspect repository, dataset, and model licenses before reuse or redistribution.
+
+
+PART 1: TOP 10 MOST DISCUSSED APPLICATION DOMAINS
+=================================================
+
+Method
+------
+The BibTeX files do not contain a single controlled application-domain field.
+Domains were estimated with high-precision keyword rules over titles and author
+keywords. The categories are multi-label: a paper about secure medical AI can count
+under both healthcare and cybersecurity. Counts therefore must not be added together.
+
+"Most discussed" below means most frequently represented in this supplied export.
+It does not mean highest citation count or the largest field across all of
+ScienceDirect.
+
+Rank  Domain                                      Papers  Share   Feasibility
+----  ------------------------------------------  ------  ------  -----------
+1     Healthcare and biomedicine                    459    19.9%   2/5
+2     Engineering, manufacturing and industrial     265    11.5%   4/5*
+3     Business, management and finance               252    10.9%   3/5
+4     Environment, climate and sustainability        168     7.3%   4/5
+5     Education and learning                         158     6.8%   5/5
+6     Law, policy and public administration           140     6.1%   5/5
+7     Cybersecurity, privacy and safety               131     5.7%   5/5
+8     Transport, mobility and maritime                122     5.3%   3/5
+9     Energy and power systems                        102     4.4%   3/5
+10    Software engineering and programming             84     3.6%   5/5
+
+*Industrial feasibility is 4/5 only for document-, code-, simulation-, or public-
+dataset tasks. It drops to 2/5 when a thesis requires factory hardware, proprietary
+logs, or real production deployment.
+
+Domain-by-domain interpretation
+-------------------------------
+
+1. Healthcare and biomedicine
+   This is by far the most represented domain, but it is not the best default
+   capstone choice. Clinical credibility may require protected data, ethics approval,
+   medical expertise, careful safety evaluation, and prospective validation.
+
+2. Engineering, manufacturing and industrial
+   SELECTED, with a narrow scope. The export contains public code for maintenance
+   RAG, rotating-machine health management, CAD interaction, and manufacturing data
+   interoperability. Avoid hardware-dependent or private-factory experiments.
+
+3. Business, management and finance
+   Common but broad. Many convincing projects require private customer, transaction,
+   company, or HR data. Choose it only with a real data partner or a strong public
+   benchmark and a precise decision task.
+
+4. Environment, climate and sustainability
+   Public environmental data and strong local relevance make this promising.
+   However, the export mixes environmental science, forecasting, remote sensing,
+   policy, and engineering, so a team must narrow the task before choosing methods.
+
+5. Education and learning
+   Very feasible technically. Its main complication is rigorous learning evaluation:
+   a strong tutoring thesis often needs instructors, consent, a student study, and
+   outcomes beyond chatbot satisfaction.
+
+6. Law, policy and public administration
+   SELECTED. The export contains a paper specifically evaluating three Vietnamese
+   legal datasets, plus open legal prompting, clause-routing, and policy-RAG systems.
+   Public legal documents and exact retrieval/citation metrics fit a capstone well.
+
+7. Cybersecurity, privacy and safety
+   Strong public benchmarks and objective metrics make it executable. It remains an
+   excellent alternative, especially for secure RAG, but the separate Scopus
+   shortlist already contains a deeper attack/defense baseline collection.
+
+8. Transport, mobility and maritime
+   Simulation can be feasible, but real autonomy, aviation, or maritime deployment
+   is not. A team choosing this domain should use SUMO or another public simulator.
+
+9. Energy and power systems
+   Important but frequently dependent on grid, building, battery, or plant data and
+   specialist modeling. It is viable through public time-series or document QA only.
+
+10. Software engineering and programming
+   SELECTED. Although it ranks tenth, it has the best capstone execution profile:
+   repositories and logs are public, tests provide automatic ground truth, and the
+   export includes multiple released implementations.
+
+Final three ScienceDirect recommendations
+-----------------------------------------
+
+1. Citation- and time-grounded Vietnamese legal retrieval/RAG.
+2. Public-data industrial knowledge and maintenance assistants.
+3. Repository-grounded software-engineering automation.
+
+
+PART 2: CITATION- AND TIME-GROUNDED VIETNAMESE LEGAL RETRIEVAL
+==============================================================
+
+Recommended thesis shape
+------------------------
+The most defensible version is not "a chatbot for all Vietnamese law." Choose one
+bounded area such as labor, tax, education, or administrative procedures. Build
+version-aware article retrieval first; only add answer generation after retrieval
+and citations are reliable.
+
+Best starting combination:
+- QCATune for Vietnamese legal embedding adaptation;
+- ClauseRoute for colloquial-query-to-formal-clause routing;
+- the document-splitter study for a simple, reproducible preprocessing baseline;
+- AT-RAFT for reference-bearing policy answers.
+
+1. [C, essential Vietnamese baseline] A fine-tuning framework based on
+   question, context, and answer relationships for enhancing legal information
+   retrieval
+
+   Method: QCATune
+   Journal/year: Engineering Applications of Artificial Intelligence, 2025
+   DOI: https://doi.org/10.1016/j.engappai.2025.111570
+   ScienceDirect:
+   https://www.sciencedirect.com/science/article/pii/S0952197625015726
+
+   Why this should be the team's first read:
+   - It is directly about low-resource Vietnamese legal retrieval.
+   - It evaluates three Vietnamese law datasets, including ViBidLaw.
+   - It trains embeddings from question-context, question-answer, and
+     answer-context relationships using synthetic examples.
+   - It reports improvements in MAP@k across ten embedding models.
+   - It is a much closer baseline than adapting only English or Chinese legal QA.
+
+   Artifact warning:
+   No complete public repository was verified. Reimplement the contrastive-learning
+   recipe only after confirming access and licenses for all three datasets.
+
+2. [A, recommended retrieval/routing baseline] ClauseRoute: Risk-Aware
+   Clause-Guided Routing for Retrieval-Augmented Legal Reasoning
+
+   Journal/year: Expert Systems with Applications, 2026
+   DOI: https://doi.org/10.1016/j.eswa.2026.133633
+   Code: https://github.com/d001121/ClauseRoute
+
+   Why use:
+   - Converts colloquial questions into formal draft clauses before retrieval.
+   - Combines sparse and dense signals with risk-aware routing.
+   - Targets the lost-in-the-middle problem in long legal contexts.
+   - Uses a 1.5B adapted model, making a reduced reproduction more realistic than
+     training a large legal LLM.
+
+   Vietnamese extension:
+   Compare direct retrieval, query rewriting, and draft-clause routing on exact
+   Vietnamese article retrieval. Test whether the method helps colloquial queries
+   without inventing legal terms.
+
+3. [A, prompt/reasoning baseline] CoLE: A collaborative legal expert prompting
+   framework for large language models in law
+
+   Journal/year: Knowledge-Based Systems, 2025
+   DOI: https://doi.org/10.1016/j.knosys.2025.113052
+   Code: https://github.com/liboaccn/cole
+
+   Why use:
+   - Separates intent identification, legal-domain selection, background generation,
+     demonstration selection, and final prompting.
+   - Evaluated with seven general LLMs, eight specialized legal LLMs, and ten
+     datasets.
+   - Does not require parameter updates, so it is a practical orchestration baseline.
+
+   Caution:
+   Self-generated legal background is risky. For the proposed system, replace it
+   with retrieved official provisions and require clause-level provenance.
+
+4. [B] Large language model for interpreting research policy using adaptive
+   two-stage retrieval augmented fine-tuning method
+
+   Method: AT-RAFT
+   Journal/year: Expert Systems with Applications, 2025
+   DOI: https://doi.org/10.1016/j.eswa.2025.127330
+   Demo repository: https://github.com/renruntao/ResearchPolicy_RAG
+
+   Why use:
+   - Combines two-stage retrieval, hard-negative fine-tuning, and a reference-bearing
+     response interface.
+   - The task is policy interpretation rather than unrestricted legal advice.
+   - Useful pattern for showing original context alongside generated explanations.
+
+   Availability warning:
+   The verified repository is a demo interface, not necessarily a complete
+   reproduction package. Treat the paper as the method specification.
+
+5. [C, preprocessing baseline] A comparative evaluation of the effectiveness
+   of document splitters for large language models in legal contexts
+
+   Journal/year: Expert Systems with Applications, 2025
+   DOI: https://doi.org/10.1016/j.eswa.2025.126711
+
+   Why use:
+   - Directly compares chunking/splitting behavior on legal documents.
+   - Chunking is inexpensive to reproduce and has a large effect on article retrieval.
+   - Provides a necessary baseline against more complex graph or agent methods.
+
+   Vietnamese extension:
+   Compare fixed tokens, sliding windows, paragraph boundaries, and legal hierarchy
+   boundaries at chapter/article/clause level.
+
+6. [B/C, graph baseline] Leverage Knowledge Graph and Large Language Model
+   for law article recommendation: A case study of Chinese criminal law
+
+   Journal/year: Journal of Web Semantics, 2026
+   DOI: https://doi.org/10.1016/j.websem.2026.100879
+   Preprint: https://arxiv.org/abs/2410.04949
+
+   Why use:
+   - Builds a case-enhanced law-article knowledge graph.
+   - Combines graph retrieval with KG-grounded LLM reasoning.
+   - Evaluates exact article recommendation, a clearer target than answer fluency.
+   - The paper states that processed data and source code are publicly available via
+     its Data Availability Statement; verify the current artifact link before use.
+
+Minimum defensible legal experiment
+-----------------------------------
+- One bounded Vietnamese legal subdomain.
+- Official sources with article/clause hierarchy, issue date, effective date,
+  amendment status, and superseded versions.
+- At least 100 expert-reviewed queries, including colloquial and time-dependent cases.
+- Retrieval baselines: BM25, dense, hybrid, and hybrid plus reranker.
+- Method variants: direct query, rewritten query, draft-clause routing.
+- Metrics: Recall@5/10, MAP, MRR/nDCG, exact article match, citation precision,
+  answer entailment, temporal correctness, latency, and cost.
+- Keep a retrieval-only result table even if the final system generates answers.
+- Present outputs as research assistance, not legal advice.
+
+
+PART 3: PUBLIC-DATA INDUSTRIAL KNOWLEDGE AND MAINTENANCE ASSISTANTS
+==================================================================
+
+Recommended thesis shape
+------------------------
+Avoid creating a general industrial agent. Reproduce one public artifact and answer
+one measurable question, for example:
+
+- does graph-plus-vector retrieval improve maintenance fault reasoning?
+- can a small model grounded in machine documentation match a larger ungrounded one?
+- which retrieval signals remain reliable under unseen equipment or fault types?
+
+Best starting combination:
+MAKG supplies the closest RAG baseline, RotLLM supplies a public machinery dataset,
+and CADialogue provides a clean executable-code evaluation pattern. A team without
+industrial expertise should prefer document QA or CAD over raw vibration modeling.
+
+1. [A, recommended industrial-RAG baseline] A Multi-Agent and synergistic
+   Knowledge Graph retrieval-augmented generation framework for intelligent
+   maintenance
+
+   Method: MAKG
+   Journal/year: Journal of Manufacturing Systems, 2026
+   DOI: https://doi.org/10.1016/j.jmsy.2026.02.016
+   Code/demo: https://github.com/LAM2360/MAKG_demo
+
+   Why use:
+   - Directly combines a knowledge graph, vector retrieval, and multiple agents for
+     maintenance decision support.
+   - Fine-tunes the embedding model rather than retraining the generator.
+   - Provides a public implementation and explicit RAG baselines.
+
+   Reproduction warning:
+   The paper's strongest evaluation uses real industrial maintenance data. Confirm
+   which data are included in the repository before committing to exact replication.
+
+2. [A, public dataset/model baseline] A unified rotating machinery health
+   management framework leveraging large language models for diverse
+   components, conditions, and tasks
+
+   Method: RotLLM
+   Journal/year: Engineering Applications of Artificial Intelligence, 2025
+   DOI: https://doi.org/10.1016/j.engappai.2025.112544
+   Code/data: https://github.com/SIA-IDE/RotLLM
+
+   Why use:
+   - Releases source code and the Large-scale Multimodal Rotating Machinery dataset.
+   - Covers fault classification, noisy conditions, and multiple health tasks.
+   - Uses a smaller encoder/projector plus parameter-efficient LoRA adaptation.
+
+   Feasibility warning:
+   This is more GPU- and signal-processing-intensive than document RAG. Run one
+   component/fault subset before attempting the full training pipeline.
+
+3. [A/B] Agentic active Asset Administration Shell for circular manufacturing
+
+   Method: A4S
+   Journal/year: Journal of Manufacturing Systems, 2026
+   DOI: https://doi.org/10.1016/j.jmsy.2026.07.011
+   Code: https://github.com/quickhdsdc/aas-mcp-server
+
+   Why use:
+   - Grounds agent actions in the Asset Administration Shell industrial standard.
+   - Constrains tool calls through schemas rather than allowing unrestricted actions.
+   - Demonstrates digital product passports and shop-floor orchestration.
+
+   Feasible extension:
+   Evaluate schema-constrained versus unconstrained tool use in a simulator. Do not
+   make real machine control part of a student thesis.
+
+4. [A, executable-design baseline] CADialogue: A multimodal LLM-powered
+   conversational assistant for intuitive parametric CAD modeling
+
+   Journal/year: Computer-Aided Design, 2026
+   DOI: https://doi.org/10.1016/j.cad.2025.104006
+   Code/data: https://github.com/Hiram31/CADialogue
+
+   Why use:
+   - Converts text, images, speech, and selections into executable CAD operations.
+   - Releases both code and its task dataset.
+   - Uses automatic execution success, refinement, and latency measures.
+   - Caching and human-in-the-loop correction provide manageable extension points.
+
+5. [A, non-RAG engineering baseline] Predictive modeling: BIM command
+   recommendation based on large-scale usage logs
+
+   Journal/year: Advanced Engineering Informatics, 2025
+   DOI: https://doi.org/10.1016/j.aei.2025.103574
+   Code: https://github.com/dcy0577/BIM-Command-Recommendation
+
+   Why read:
+   - Demonstrates sequence-based next-command prediction in an engineering tool.
+   - Uses Recall@10 and other objective recommendation metrics.
+   - Provides a strong comparison between predictive assistance and generative agents.
+
+   Data warning:
+   The paper uses very large private usage logs. Verify whether the repository offers
+   sufficient sample/public data; otherwise reuse the evaluation design, not its scale.
+
+6. [C, hybrid retrieval design] Advancing quality control in off-site
+   construction with large language models enhanced by hybrid
+   retrieval-augmented generation
+
+   Journal/year: Advanced Engineering Informatics, 2026
+   DOI: https://doi.org/10.1016/j.aei.2026.104381
+
+   Why use:
+   - Aligns dense retrieval, sparse retrieval, and knowledge-graph traversal.
+   - Evaluates information retrieval, compliance checking, and task guidance.
+   - Uses medium-sized open models, showing that method design can matter more than
+     using the largest generator.
+
+   Limitation:
+   No complete public repository was verified. Use it as an architecture and
+   ablation reference after a released baseline is running.
+
+Minimum defensible industrial experiment
+----------------------------------------
+- One public dataset or fully redistributable document corpus.
+- One task: fault QA, maintenance recommendation, CAD execution, or command prediction.
+- Baselines: no retrieval, BM25, dense retrieval, and hybrid retrieval.
+- Proposed contribution: graph/structure-aware reranking, domain-adapted embeddings,
+  schema-constrained tools, or cross-equipment generalization.
+- Metrics: retrieval Recall@k/MRR, task accuracy or execution success, unsupported
+  claim rate, robustness to unseen fault/equipment types, latency, and cost.
+- Evaluate a small open model and one stronger model under the same evidence budget.
+- Do not claim real-world safety or production readiness from a laboratory benchmark.
+
+
+PART 4: REPOSITORY-GROUNDED SOFTWARE-ENGINEERING AUTOMATION
+===========================================================
+
+Recommended thesis shape
+------------------------
+Choose one task whose result can be automatically checked. The easiest ScienceDirect
+options are log parsing, commit-message generation, unit-test generation, or
+repository refactoring. Avoid a vague "AI coding assistant."
+
+Best starting combination:
+SCULP offers the cleanest released implementation and benchmark task. Consensus
+Planning offers a second executable code-generation baseline. CoRaCMG gives a simple
+project-specific retrieval thesis that can be reproduced from public Git histories.
+
+1. [A, recommended baseline] SCULP: An unsupervised LLM-based log parser
+   with self-correcting capabilities
+
+   Journal/year: Journal of Systems and Software, 2026
+   DOI: https://doi.org/10.1016/j.jss.2026.112935
+   Code: https://github.com/lezhang-thu/SCULP
+
+   Why use:
+   - Public implementation validated by the journal's Open Science Board.
+   - Uses the large Loghub-2.0 benchmark.
+   - Requires no labeled demonstrations.
+   - Has a focused self-correction component that can be ablated.
+   - Supports accuracy, robustness, throughput, and API-cost experiments.
+
+   Feasible extension:
+   Test smaller local models, Vietnamese application logs, unseen systems, or a
+   confidence gate that invokes the LLM only when a classical parser is uncertain.
+
+2. [A, code-generation baseline] Consensus planning boosts LLM code
+   generation
+
+   Journal/year: Information and Software Technology, 2026
+   DOI: https://doi.org/10.1016/j.infsof.2026.108030
+   Code: https://github.com/AISP-group/CPCG
+
+   Why use:
+   - Releases the multi-agent consensus-planning implementation.
+   - Evaluates eight program-synthesis benchmarks and several languages.
+   - Uses executable correctness through pass@1 rather than only text similarity.
+
+   Thesis extension:
+   Compare consensus planning with retrieved repository evidence and measure whether
+   additional agents justify their token and latency cost.
+
+3. [A, structured code-RAG baseline] Geo-FuB: A method for constructing an
+   Operator-Function knowledge base for geospatial code generation with large
+   language models
+
+   Journal/year: Knowledge-Based Systems, 2025
+   DOI: https://doi.org/10.1016/j.knosys.2025.113624
+   Code/data: https://github.com/whuhsy/GEE-FuB
+
+   Why use:
+   - Builds structured operator-function knowledge from 154,075 Google Earth Engine
+     scripts.
+   - Combines semantic features, ASTs, frequent operator combinations, and RAG.
+   - Offers a concrete example of repository/domain structure reducing hallucinations.
+
+   Generalizable idea:
+   Replace Google Earth Engine operators with the APIs of one public Python or Java
+   library and compare structure-aware retrieval with flat chunk retrieval.
+
+4. [C, repository-level architecture] RepoAI: Automated code refactoring
+   through multi-agent LLM orchestration and retrieval-augmented generation
+
+   Journal/year: Science of Computer Programming, 2026
+   DOI: https://doi.org/10.1016/j.scico.2026.103477
+
+   Why use:
+   - Coordinates intent, retrieval, multi-file generation, validation, and GitHub
+     integration.
+   - Evaluates multiple pipeline ablations and model families.
+   - Uses RefactorBench tasks from more than ten open-source projects.
+   - Explicitly addresses self-evaluation bias with cross-family validation.
+
+   Artifact warning:
+   No official public repository was verified during this review. Use the paper and
+   public benchmark as a design reference, not the first implementation dependency.
+
+5. [C, directly reproducible idea] CoRaCMG: Contextual retrieval-augmented
+   framework for commit message generation
+
+   Journal/year: Information and Software Technology, 2026
+   DOI: https://doi.org/10.1016/j.infsof.2026.108169
+   Preprint: https://arxiv.org/abs/2509.18337
+
+   Why use:
+   - Retrieves similar diff-message pairs to learn project terminology and style.
+   - Evaluates Java, Python, and C++ with multiple LLMs and human judgments.
+   - Reports diminishing returns after a small number of retrieved examples.
+
+   Feasible reproduction:
+   Mine commit/diff pairs from frozen public repositories. Compare BM25, code/diff
+   embeddings, hybrid retrieval, and project-aware reranking.
+
+6. [C, testing baseline] TestLoter: A logic-driven framework for automated
+   unit test generation and error repair using large language models
+
+   Journal/year: Journal of Computer Languages, 2025
+   DOI: https://doi.org/10.1016/j.cola.2025.101348
+
+   Why use:
+   - Combines white-box reasoning with black-box functional validation.
+   - Adds hierarchical repair for invalid generated tests.
+   - Evaluates nine open-source projects using line and branch coverage.
+
+   Availability warning:
+   ScienceDirect reports that data are available on request, and no official code
+   repository was verified. Use it as a method/comparison paper unless the authors
+   provide the artifact.
+
+Minimum defensible software-engineering experiment
+--------------------------------------------------
+- One task and a frozen set of public repositories/log datasets.
+- Prevent temporal, repository, and test-set leakage.
+- Baselines appropriate to the task:
+  * log parsing: Drain/classical parser, LUNAR-style LLM parser, SCULP;
+  * commit messages: no retrieval, BM25, dense, hybrid;
+  * code generation/refactoring: direct generation, RAG, RAG plus validation;
+  * tests: direct prompting, test-aware retrieval, repair loop.
+- Metrics:
+  * logs: grouping/template accuracy, throughput, API calls;
+  * commit messages: automatic metrics plus blinded usefulness/correctness;
+  * code/refactoring: compilation, tests passed, pass@k, semantic preservation;
+  * tests: compilation, pass rate, line/branch coverage, mutation score.
+- Include latency, token use, monetary cost, and a smaller local model.
+- Run ablations proving which retrieval, planning, or correction component matters.
+
+
+PART 5: FINAL DECISION GUIDE
+============================
+
+Choose Vietnamese legal retrieval if:
+- local usefulness and a distinctive thesis contribution are priorities;
+- the team can secure legal-expert annotation/review; and
+- members are comfortable with retrieval evaluation and document versioning.
+
+Choose industrial knowledge/maintenance if:
+- the team wants a domain that is both common in ScienceDirect and less saturated
+  than healthcare;
+- it can commit to one released dataset or simulator before implementation; and
+- members have interest in knowledge graphs, signals, CAD, or industrial standards.
+
+Choose software-engineering automation if:
+- reproducibility and automatic metrics matter most;
+- the team has no external domain expert or private-data partner; and
+- members are comfortable with repositories, testing, logs, or program analysis.
+
+Overall recommendation
+----------------------
+The safest execution choice is software engineering, especially adaptive LLM log
+parsing based on SCULP or project-specific retrieval for commit messages.
+
+The most locally distinctive choice is Vietnamese legal retrieval because the
+ScienceDirect collection already contains a directly relevant Vietnamese baseline.
+
+The best balance between ScienceDirect frequency and practical novelty is industrial
+knowledge/maintenance, but only when the team first confirms a complete public
+dataset and avoids real equipment control.
+
